@@ -291,6 +291,19 @@ sdmsteppeauto-overlays-dtb-$(CONFIG_ARCH_SA6155) += $(SA6155_BOARDS) $(SA6155P_B
 
 dtb-y += $(sdmsteppeauto-dtb-y)
 
+SDM670_BASE_DTB += qcs605.dtb
+
+SDM670_BOARDS += \
+		 qcs605-mtp-overlay.dtbo \
+		 qcs605-cdp-overlay.dtbo \
+		 qcs605-360camera-overlay.dtbo \
+		 qcs605-external-codec-mtp-overlay.dtbo
+
+qcs605-dtb-$(CONFIG_ARCH_SDM670) += \
+	$(call add-overlays, $(SDM670_BOARDS) ,$(SDM670_BASE_DTB))
+qcs605-overlays-dtb-$(CONFIG_ARCH_SDM670) += $(SDM670_BOARDS) $(SDM670_BASE_DTB)
+dtb-y += $(qcs605-dtb-y)
+
 LEMANS_BASE_DTB		+= lemans.dtb
 LEMANS_IVI_BASE_DTB	+= lemans-ivi.dtb
 LEMANS_ADAS_HIGH_BASE_DTB += lemans-adas-high.dtb
