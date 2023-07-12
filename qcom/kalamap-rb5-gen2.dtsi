@@ -641,10 +641,78 @@
 	};
 };
 
+&qupv3_hub_i2c3 {
+	status = "ok";
+
+	pcie_i2c_ctrl0: pcie_i2c_ctrl0 {
+		compatible = "qcom,pcie0-i2c-ntn3";
+		reg = <0x77>;
+		gpio-config-reg = <0x801208>;
+		ep-reset-reg = <0x801210>;
+		ep-reset-gpio-mask = <0xc>;
+		version-reg = <0x800000>;
+		dump-regs = <0x801330 0x801350 0x801370>;
+		reg_update = <0x82c030 0x1
+					0x828000 0x3
+					0x82bd00 0x8
+					0x82c030 0x2
+					0x828000 0x3
+					0x82bd00 0x8
+					0x82c030 0x8
+					0x828000 0x1
+					0x82bd00 0x8
+					0x82c01c 0x10
+					0x82c030 0xf
+					0x828000 0xf
+					0x82b268 0x2>;
+		/*FOM for preset caluclation*/
+		switch_reg_update = <0x82c02c 0x00000007
+					0x824a10 0x00000001
+					0x82c030 0x00000008
+					0x828000 0x00000001
+					0x82b074 0x00000020
+					0x82b2bc 0x00000001>;
+	};
+};
+
 &pcie1 {
+	pcie-i2c-phandle = <&qupv3_hub_i2c3>;
 	qcom,boot-option = <0x2>;
 	qcom,apss-based-l1ss-sleep;
+
+	iommu-map = <0x0 &apps_smmu 0x1480 0x1>,
+		<0x100 &apps_smmu 0x1481 0x1>,
+		<0x208 &apps_smmu 0x1482 0x1>,
+		<0x210 &apps_smmu 0x1483 0x1>,
+		<0x218 &apps_smmu 0x1484 0x1>,
+		<0x300 &apps_smmu 0x1487 0x1>,
+		<0x400 &apps_smmu 0x1488 0x1>,
+		<0x500 &apps_smmu 0x148c 0x1>,
+		<0x501 &apps_smmu 0x148e 0x1>;
 };
+
+&pcie1_rp {
+	#address-cells = <5>;
+	#size-cells = <0>;
+
+	/* BDF 1.0.0 */
+	pcie1_bus1_dev0_fn0: pcie1_bus1_dev0_fn0 {
+		reg = <0 0 0 0 0>;
+		/* BDF 2.1.0 */
+		pcie1_bus2_dev1_fn0: pcie1_bus2_dev1_fn0 {
+			reg = <0x800 0x0 0x0 0x0 0x0>;
+		};
+		/* BDF 2.2.0 */
+		pcie1_bus2_dev2_fn0: pcie1_bus2_dev2_fn0 {
+			reg = <0x1000 0x0 0x0 0x0 0x0>;
+		};
+		/* BDF 2.3.0 */
+		pcie1_bus2_dev3_fn0: pcie1_bus2_dev3_fn0 {
+			reg = <0x1800 0x0 0x0 0x0 0x0>;
+		};
+	};
+};
+
 &thermal_zones {
 	skin-msm-therm {
 		status = "disabled";
