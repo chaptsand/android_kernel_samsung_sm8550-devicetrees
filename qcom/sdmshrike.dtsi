@@ -499,14 +499,6 @@
 			size = <0x0 0x1000000>;
 		};
 
-		sp_mem: sp_region {  /* SPSS-HLOS ION shared mem */
-			compatible = "shared-dma-pool";
-			alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
-			reusable;
-			alignment = <0x0 0x400000>;
-			size = <0x0 0x800000>;
-		};
-
 		secure_display_memory: secure_display_region { /* Secure UI */
 			compatible = "shared-dma-pool";
 			alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
