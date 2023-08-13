@@ -762,6 +762,7 @@
 		qcom,mhi-interrupt;
 		qcom,no-m0-timeout;
 		dummy-supply = <&pcie_ep>;
+		qcom,mhi-num-ipc-pages-dev-fac = <2>;
 
 		status = "disabled";
 	};
