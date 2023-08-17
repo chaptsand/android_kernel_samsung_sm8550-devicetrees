@@ -449,7 +449,7 @@
 &qupv3_hub_i2c4 {
 	status = "ok";
 
-	pcie_i2c_ctrl: pcie_i2c_ctrl {
+	pcie0_i2c_ctrl: pcie0_i2c_ctrl {
 		compatible = "qcom,pcie-i2c-ntn3";
 		reg = <0x77>;
 		gpio-config-reg = <0x801208>;
@@ -644,7 +644,7 @@
 &qupv3_hub_i2c3 {
 	status = "ok";
 
-	pcie_i2c_ctrl0: pcie_i2c_ctrl0 {
+	pcie1_i2c_ctrl: pcie1_i2c_ctrl {
 		compatible = "qcom,pcie-i2c-ntn3";
 		reg = <0x77>;
 		gpio-config-reg = <0x801208>;
