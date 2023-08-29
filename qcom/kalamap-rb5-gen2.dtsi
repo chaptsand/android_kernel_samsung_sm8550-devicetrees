@@ -451,6 +451,7 @@
 
 	pcie0_i2c_ctrl: pcie0_i2c_ctrl {
 		compatible = "qcom,pcie-i2c-ntn3";
+		rc-index = <0x0>;
 		reg = <0x77>;
 		gpio-config-reg = <0x801208>;
 		ep-reset-reg = <0x801210>;
@@ -646,6 +647,7 @@
 
 	pcie1_i2c_ctrl: pcie1_i2c_ctrl {
 		compatible = "qcom,pcie-i2c-ntn3";
+		rc-index = <0x1>;
 		reg = <0x77>;
 		gpio-config-reg = <0x801208>;
 		ep-reset-reg = <0x801210>;
