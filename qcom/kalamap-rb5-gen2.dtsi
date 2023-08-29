@@ -450,7 +450,7 @@
 	status = "ok";
 
 	pcie_i2c_ctrl: pcie_i2c_ctrl {
-		compatible = "qcom,pcie0-i2c-ntn3";
+		compatible = "qcom,pcie-i2c-ntn3";
 		reg = <0x77>;
 		gpio-config-reg = <0x801208>;
 		ep-reset-reg = <0x801210>;
@@ -645,7 +645,7 @@
 	status = "ok";
 
 	pcie_i2c_ctrl0: pcie_i2c_ctrl0 {
-		compatible = "qcom,pcie0-i2c-ntn3";
+		compatible = "qcom,pcie-i2c-ntn3";
 		reg = <0x77>;
 		gpio-config-reg = <0x801208>;
 		ep-reset-reg = <0x801210>;

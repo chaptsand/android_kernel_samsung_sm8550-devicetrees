@@ -572,7 +572,7 @@ i2c child node
 	Usage: required
 	Value type: <stringlist>
 	Definition: Compatible list, contains
-		- "qcom,pcie0-i2c-ntn3" for NTN3 switch attached to Root port 0
+		- "qcom,pcie-i2c-ntn3" for NTN3 switch attached to Root port 0
 
 - reg:
 	Usage: required
@@ -616,7 +616,7 @@ Example
 
 &i2c_5 {
 	pcie_i2c_ctrl: pcie_i2c_ctrl {
-		compatible = "qcom,pcie0-i2c-ntn3";
+		compatible = "qcom,pcie-i2c-ntn3";
 		reg = <0x77>;
 		gpio-config-reg = <0x801208>;
 		ep-reset-reg = <0x801210>;
