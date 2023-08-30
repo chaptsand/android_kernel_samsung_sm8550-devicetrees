@@ -31,9 +31,9 @@
 
 &soc {
 
-	qps615_bridge0_vreg: qps615_bridge0_vreg {
+	qps615_bridge0_0p9_vreg: qps615_bridge0_0p9_vreg {
 		compatible = "regulator-fixed";
-		regulator-name = "qps615_bridge0_vreg";
+		regulator-name = "qps615_bridge0_0p9_vreg";
 		gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
 		regulator-min-microvolt = <1000000>;
 		regulator-max-microvolt = <1000000>;
@@ -41,14 +41,36 @@
 		regulator-enable-ramp-delay = <4300>;
 	};
 
-	qps615_bridge1_vreg: qps615_bridge1_vreg {
+	qps615_bridge1_0p9_vreg: qps615_bridge1_0p9_vreg {
 		compatible = "regulator-fixed";
-		regulator-name = "qps615_bridge1_vreg";
+		regulator-name = "qps615_bridge1_0p9_vreg";
 		gpio = <&tlmm 42 GPIO_ACTIVE_HIGH>;
 		regulator-min-microvolt = <1000000>;
 		regulator-max-microvolt = <1000000>;
 		enable-active-high;
 		regulator-enable-ramp-delay = <4300>;
+	};
+
+	qps615_resx0_0p9_vreg: qps615_resx0_0p9_vreg {
+		compatible = "regulator-fixed";
+		regulator-name = "qps615_resx0_0p9_vreg";
+		gpio = <&tlmm 64 GPIO_ACTIVE_HIGH>;
+		vin-supply = <&qps615_bridge0_0p9_vreg>;
+		regulator-min-microvolt = <1000000>;
+		regulator-max-microvolt = <1000000>;
+		enable-active-high;
+		regulator-enable-ramp-delay = <2000>;
+	};
+
+	qps615_resx1_0p9_vreg: qps615_resx1_0p9_vreg {
+	compatible = "regulator-fixed";
+		regulator-name = "qps615_resx1_0p9_vreg";
+		gpio = <&tlmm 65 GPIO_ACTIVE_HIGH>;
+		vin-supply = <&qps615_bridge1_0p9_vreg>;
+		regulator-min-microvolt = <1000000>;
+		regulator-max-microvolt = <1000000>;
+		enable-active-high;
+		regulator-enable-ramp-delay = <2000>;
 	};
 
 	gpio_key {
@@ -510,7 +532,7 @@
 	pcie-usb-hub-ponreset-gpio = <&tlmm 182 0>;
 
 	pcie-i2c-phandle = <&qupv3_hub_i2c4>;
-	vreg-3p3-supply = <&qps615_bridge0_vreg>;
+	vreg-3p3-supply = <&qps615_resx0_0p9_vreg>;
 
 	 qcom,pcie-phy-ver = <102>;
 			qcom,phy-sequence = <0x0240 0x03 0x0
@@ -703,7 +725,7 @@
 &pcie1 {
 	pcie-i2c-phandle = <&qupv3_hub_i2c3>;
 	qcom,boot-option = <0x2>;
-	vreg-3p3-supply = <&qps615_bridge1_vreg>;
+	vreg-3p3-supply = <&qps615_resx1_0p9_vreg>;
 	qcom,apss-based-l1ss-sleep;
 
 	qcom,phy-sequence = <0x1240 0x03 0x0
