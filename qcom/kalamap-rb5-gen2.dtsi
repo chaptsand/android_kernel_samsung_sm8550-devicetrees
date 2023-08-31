@@ -587,3 +587,7 @@
 		status = "disabled";
 	};
 };
+
+&qcom_qbt {
+	status = "disabled";
+};
