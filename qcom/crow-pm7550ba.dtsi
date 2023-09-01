@@ -110,8 +110,8 @@
 };
 
 &pm7550ba_bcl {
-	nvmem-cells = <&sm1510_present>;
-	nvmem-cell-names = "sm1510_present";
+	nvmem-cells = <&smb1510_present>;
+	nvmem-cell-names = "smb1510_present";
 };
 
 &thermal_zones {
