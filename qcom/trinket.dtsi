@@ -1115,6 +1115,14 @@
 		qcom,qsee-reentrancy-support = <2>;
 	};
 
+	qcom_tzlog: tz-log@0c125720 {
+		compatible = "qcom,tz-log";
+		reg = <0x0c125720 0x3000>;
+		qcom,hyplog-enabled;
+		hyplog-address-offset = <0x410>;
+		hyplog-size-offset = <0x414>;
+	};
+
 	apcs_glb: mailbox@0F111000 {
 		compatible = "qcom,trinket-apcs-hmss-global";
 		reg = <0x0F111000 0x1000>;
