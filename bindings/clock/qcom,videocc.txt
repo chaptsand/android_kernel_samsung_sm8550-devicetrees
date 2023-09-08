@@ -5,6 +5,7 @@ Required properties :
 - compatible : shall contain only one of the following:
 
 			"qcom,sdm845-videocc"
+			"qcom,sdm845-v2-videocc"
 			"qcom,lahaina-videocc"
 			"qcom,shima-videocc"
 			"qcom,waipio-videocc"
@@ -19,6 +20,7 @@ Required properties :
 			"qcom,lemans-videocc"
 			"qcom,crow-videocc"
 			"qcom,trinket-videocc"
+			"qcom,sdm670-videocc"
 
 - reg : shall contain base register location and length
 - #clock-cells : from common clock binding, shall contain 1.
