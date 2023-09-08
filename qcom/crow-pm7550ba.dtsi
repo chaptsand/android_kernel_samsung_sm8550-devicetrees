@@ -276,12 +276,12 @@
 		cooling-maps {
 			lbat_cdsp2 {
 				trip = <&b_bcl_lvl2>;
-				cooling-device = <&cdsp_sw 7 THERMAL_NO_LIMIT>;
+				cooling-device = <&cdsp_sw 7 7>;
 			};
 
 			lbat_gpu2 {
 				trip = <&b_bcl_lvl2>;
-				cooling-device = <&msm_gpu 7 THERMAL_NO_LIMIT>;
+				cooling-device = <&msm_gpu 7 7>;
 			};
 		};
 	};
