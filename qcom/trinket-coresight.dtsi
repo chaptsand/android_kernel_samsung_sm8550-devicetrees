@@ -54,7 +54,6 @@
 		      <0x8064000 0x15000>;
 		reg-names = "tmc-base", "bam-base";
 
-		qcom,smmu-s1-bypass;
 		iommus = <&apps_smmu 0x0c0 0>,
 				<&apps_smmu 0x0a0 0>;
 
@@ -62,7 +61,10 @@
 
 		coresight-name = "coresight-tmc-etr";
 		qcom,mem_support;
-		usb_bam_support;
+		qcom,sw-usb;
+		qcom,iommu-dma = "bypass";
+		qcom,iommu-dma-addr-pool = <0x0 0xffc00000>;
+
 		coresight-ctis = <&cti0>;
 		coresight-csr = <&csr>;
 
