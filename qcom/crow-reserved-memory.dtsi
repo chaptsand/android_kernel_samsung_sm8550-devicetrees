@@ -177,12 +177,12 @@
 
 	ta_mem: ta_region@d8800000 {
 		no-map;
-		reg = <0x0 0xd8800000 0x0 0x1200000>;
+		reg = <0x0 0xd8800000 0x0 0x1a00000>;
 	};
 
-	tz_tags_mem: tz_tags_region@d9a00000 {
+	tz_tags_mem: tz_tags_region@da200000 {
 		no-map;
-		reg = <0x0 0xd9a00000 0x0 0x680000>;
+		reg = <0x0 0xda200000 0x0 0x680000>;
 	};
 
 	trust_ui_vm_mem: trust_ui_vm_region@f3800000 {
