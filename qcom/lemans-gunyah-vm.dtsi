@@ -1,7 +1,6 @@
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 #include <dt-bindings/clock/qcom,gcc-lemans.h>
 #include <dt-bindings/arm/msm/qcom_dma_heap_dt_constants.h>
-#include <dt-bindings/clock/qcom,rpmh.h>
 
 / {
 	#address-cells = <0x2>;
@@ -486,12 +485,6 @@
 		#reset-cells = <1>;
 	};
 
-	dummycc: qcom,dummycc {
-		compatible = "qcom,dummycc";
-		#clock-cells = <1>;
-		#reset-cells = <1>;
-	};
-
 	psci {
 		compatible = "arm,psci-1.0";
 		method = "smc";
@@ -547,8 +540,7 @@
 		compatible = "qcom,msm-rng";
 		reg = <0x10dc000 0x1000>;
 		qcom,no-qrng-config;
-		clocks = <&dummycc RPMH_HWKM_CLK>;
-		clock-names = "km_clk_src";
+		qcom,no-clock-support;
 		status = "ok";
 	};
 
