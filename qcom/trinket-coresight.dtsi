@@ -58,6 +58,7 @@
 				<&apps_smmu 0x0a0 0>;
 
 		arm,buffer-size = <0x400000>;
+		arm,scatter-gather;
 
 		coresight-name = "coresight-tmc-etr";
 		qcom,mem_support;
