@@ -492,7 +492,7 @@
 
 		usecase3_apps_dma {
 			compatible = "qcom,iommu-debug-usecase";
-			iommus = <&apps_smmu 0x581 0>;
+			iommus = <&apps_smmu 0x580 0>;
 			dma-coherent;
 		};
 
