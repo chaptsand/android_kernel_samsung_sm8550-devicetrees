@@ -244,6 +244,26 @@
 			status = "disabled";
 		};
 
+		qupv3_se4_2uart: qcom,qup_uart@990000 {
+			compatible = "qcom,msm-geni-serial-hs";
+			reg = <0x990000 0x4000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg-names = "se_phys";
+			interrupts = <GIC_SPI 531 IRQ_TYPE_LEVEL_HIGH>;
+			clock-names = "se-clk";
+			clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
+			interconnect-names = "qup-core", "qup-config", "qup-memory";
+			interconnects =
+			<&clk_virt MASTER_QUP_CORE_0 &clk_virt SLAVE_QUP_CORE_0>,
+			<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_0>,
+			<&aggre2_noc MASTER_QUP_0  &mc_virt  SLAVE_EBI1>;
+			pinctrl-names = "default", "sleep";
+			pinctrl-0 = <&qupv3_se4_2uart_active>;
+			pinctrl-1 = <&qupv3_se4_2uart_sleep>;
+			status = "disabled";
+		};
+
 		qupv3_se5_i2c: i2c@994000 {
 			compatible = "qcom,i2c-geni";
 			reg = <0x994000 0x4000>;
