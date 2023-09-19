@@ -51,6 +51,7 @@
 			compatible = "snps,dwc3";
 			reg = <0x4e00000 0xcd00>;
 			iommus = <&apps_smmu 0x100 0x0>;
+			qcom,iommu-dma = "bypass";
 
 			interrupt-parent = <&intc>;
 			interrupts = <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
