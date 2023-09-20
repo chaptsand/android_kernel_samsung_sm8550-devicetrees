@@ -563,6 +563,11 @@
 		qcom,use-3-lvl-tables;
 		dma-coherent;
 	};
+
+	dma_dev@0x0 {
+		compatible = "qcom,iommu-dma";
+		memory-region = <&system_cma>;
+	};
 };
 
 / {
