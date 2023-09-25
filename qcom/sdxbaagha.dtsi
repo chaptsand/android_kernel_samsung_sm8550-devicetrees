@@ -674,6 +674,7 @@
 		qcom,aoss-rst-clr;
 		qcom,tcsr-reset-separation-offset = <0x3f8>;
 		qcom,pcie-disconnect-req-reg-b = <6>;
+		qcom,ep-pcie-num-ipc-pages-dev-fac = <2>;
 		qcom,aux-clk = <0x13>;
 		qcom,phy-init = <0x0240 0x01 0x0
 				0x0094 0x00 0x0

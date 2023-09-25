@@ -20,7 +20,7 @@
 	pinctrl-0 = <&sdc2_on>, <&sd_card_det_default>;
 	pinctrl-1 = <&sdc2_off>, <&sd_card_det_default>;
 
-	cd-gpios = <&pm8550_gpios 12 GPIO_ACTIVE_LOW>;
+	cd-gpios = <&pm8550_gpios 12 GPIO_ACTIVE_HIGH>;
 
 	resets = <&gcc GCC_SDCC2_BCR>;
 	reset-names = "core_reset";
@@ -53,20 +53,40 @@
 		#clock-cells = <0>;
 		clock-frequency = <40000000>;
 	};
+
+	bob_3p3: bob3v3_vreg {
+		compatible = "regulator-fixed";
+		regulator-name = "bob_3p3";
+
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always-on;
+		vin-supply = <&L15B>;
+	};
+
+	vdc_5v: vdc5v_vreg {
+		compatible = "regulator-fixed";
+		regulator-name = "vdc_5v";
+
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		regulator-always-on;
+		vin-supply = <&bob_3p3>;
+	};
 };
 
-&qupv3_se11_spi {
+&qupv3_se8_spi {
 	status = "ok";
 	can@0 {
 		compatible = "microchip,mcp2518fd";
 		reg = <0>;
 		clocks = <&clk40M>;
-		interrupts-extended = <&tlmm 55 IRQ_TYPE_LEVEL_LOW>;
+		interrupts-extended = <&tlmm 10 IRQ_TYPE_LEVEL_LOW>;
 		interrupt-names = "can_irq";
 		spi-max-frequency = <10000000>;
 		gpio-controller;
-		vdd-supply = <&L14B>;
-		xceiver-supply = <&L14B>;
+		vdd-supply = <&vdc_5v>;
+		xceiver-supply = <&vdc_5v>;
 		status = "ok";
 	};
 };
@@ -233,7 +253,7 @@
 &qupv3_se4_spi {
 	#address-cells = <1>;
 	#size-cells = <0>;
-	status = "disabled";
+	status = "ok";
 	qcom,touch-active = "goodix,gt9916S";
 	qcom,la-vm;
 
@@ -300,8 +320,6 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&usb3phy_portselect_gpio>;
 		gpios = <&tlmm 11 0>;
-		set-aux;
-		aux-orientation-violate-usb;
 
 		eq = /bits/ 8 <
 				/* Parameters for USB */
@@ -376,26 +394,6 @@
 	qcom,thermal-mitigation-step = <500000>;
 };
 
-&apps_rsc_drv2 {
-	rpmh-regulator-ldob11 {
-		/delete-property/ proxy-supply;
-		L11B: pm_humu_l11: regulator-pm-humu-l11 {
-			/delete-property/ qcom,proxy-consumer-enable;
-		};
-	};
-
-	rpmh-regulator-ldob12 {
-		/delete-property/ proxy-supply;
-		L12B: pm_humu_l12: regulator-pm-humu-l12 {
-			/delete-property/ qcom,proxy-consumer-enable;
-		};
-	};
-};
-
-&L14B {
-	regulator-always-on;
-};
-
 &regulator_ocp_notifier {
 	periph-1c1-supply = <&L1B>;
 	periph-1c2-supply = <&L2B>;
@@ -405,6 +403,8 @@
 	periph-1c8-supply = <&L8B>;
 	periph-1c9-supply = <&L9B>;
 	periph-1ca-supply = <&L10B>;
+	periph-1cb-supply = <&L11B>;
+	periph-1cc-supply = <&L12B>;
 	periph-1cd-supply = <&L13B>;
 	periph-1ce-supply = <&L14B>;
 	periph-1cf-supply = <&L15B>;
@@ -447,12 +447,6 @@
 };
 
 &pcie0 {
-	qcom,boot-option = <0x2>;
-
-	pcie-usb-hub-power-1p05-gpio = <&tlmm 179 0>;
-	pcie-usb-hub-power-3p3-gpio = <&tlmm 13 0>;
-	pcie-usb-hub-ponreset-gpio = <&tlmm 182 0>;
-
 	 qcom,pcie-phy-ver = <102>;
 			qcom,phy-sequence = <0x0240 0x03 0x0
 					0x00c0 0x01 0x0
@@ -574,25 +568,5 @@
 &pcie1 {
 	qcom,boot-option = <0x2>;
 	qcom,apss-based-l1ss-sleep;
-};
-&thermal_zones {
-	skin-msm-therm {
-		status = "disabled";
-	};
-
-	cam-flash-therm {
-		status = "disabled";
-	};
-
-	wlan-therm {
-		status = "disabled";
-	};
-
-	rear-tof-therm {
-		status = "disabled";
-	};
-};
-
-&qcom_qbt {
-	status = "disabled";
+	qcom,no-client-based-bw-voting;
 };
