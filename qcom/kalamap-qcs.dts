@@ -8,3 +8,11 @@
 	qcom,board-id = <0 0>;
 };
 
+&pcie0 {
+	/delete-property/ qcom,config-recovery;
+	/delete-property/ qcom,drv-name;
+};
+
+&pcie1 {
+	/delete-property/ qcom,drv-name;
+};
