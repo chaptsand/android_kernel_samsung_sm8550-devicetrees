@@ -1359,6 +1359,7 @@
 			qcom,pcie-active-config;
 			qcom,pcie-aggregated-irq;
 			qcom,pcie-mhi-a7-irq;
+			qcom,aoss-rst-clr;
 			qcom,phy-status-reg2 = <0x1214>;
 			qcom,mhi-soc-reset-offset = <0xb001b8>;
 			qcom,aux-clk = <0x11>;
