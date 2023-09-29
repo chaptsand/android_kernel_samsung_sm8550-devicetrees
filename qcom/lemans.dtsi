@@ -851,8 +851,6 @@
 
 	qcom,power-state {
 		compatible = "qcom,power-state";
-		qcom,subsys-name = "lpass", "cdsp", "cdsp1", "gpdsp0", "gpdsp1";
-		qcom,rproc-handle = <&adsp_pas>, <&cdsp_pas>, <&cdsp1_pas>, <&gpdsp0_pas>, <&gpdsp1_pas>;
 		qcom,qmp = <&aoss_qmp>;
 		label = "aop";
 		#mbox-cells = <1>;
@@ -1361,14 +1359,28 @@
 		#size-cells = <1>;
 		ranges;
 
-		qcom_l3_dcvs_hw: l3 {
+		qcom_l3_0_dcvs_hw: l3_0 {
 			compatible = "qcom,dcvs-hw";
 			qcom,dcvs-hw-type = <2>;
 			qcom,bus-width = <32>;
 			reg = <0x18590000 0x4000>, <0x18590100 0xa0>;
 			reg-names = "l3-base", "l3tbl-base";
 
-			l3_dcvs_sp: sp {
+			l3_0_dcvs_sp: sp_0 {
+				compatible = "qcom,dcvs-path";
+				qcom,dcvs-path-type = <0>;
+				qcom,shared-offset = <0x0090>;
+			};
+		};
+
+		qcom_l3_1_dcvs_hw: l3_1 {
+			compatible = "qcom,dcvs-hw";
+			qcom,dcvs-hw-type = <4>;
+			qcom,bus-width = <32>;
+			reg = <0x18592000 0x4000>, <0x18592100 0xa0>;
+			reg-names = "l3-base", "l3tbl-base";
+
+			l3_1_dcvs_sp: sp_1 {
 				compatible = "qcom,dcvs-path";
 				qcom,dcvs-path-type = <0>;
 				qcom,shared-offset = <0x0090>;
@@ -1482,10 +1494,10 @@
 			};
 		};
 
-		l3 {
+		l3_0 {
 			compatible = "qcom,memlat-grp";
-			qcom,target-dev = <&qcom_l3_dcvs_hw>;
-			qcom,sampling-path = <&l3_dcvs_sp>;
+			qcom,target-dev = <&qcom_l3_0_dcvs_hw>;
+			qcom,sampling-path = <&l3_0_dcvs_sp>;
 			qcom,miss-ev = <0x17>;
 
 			gold-0 {
@@ -1496,6 +1508,23 @@
 					< 2362000 1612800 >;
 				qcom,sampling-enabled;
 			};
+
+			gold-compute {
+				compatible = "qcom,memlat-mon";
+				qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3>;
+				qcom,cpufreq-memfreq-tbl =
+					< 2112000  921600 >,
+					< 2362000 1612800 >;
+				qcom,sampling-enabled;
+				qcom,compute-mon;
+			};
+		};
+
+		l3_1 {
+			compatible = "qcom,memlat-grp";
+			qcom,target-dev = <&qcom_l3_1_dcvs_hw>;
+			qcom,sampling-path = <&l3_1_dcvs_sp>;
+			qcom,miss-ev = <0x17>;
 
 			gold-1 {
 				compatible = "qcom,memlat-mon";
@@ -1508,7 +1537,7 @@
 
 			gold-compute {
 				compatible = "qcom,memlat-mon";
-				qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7>;
+				qcom,cpulist = <&CPU4 &CPU5 &CPU6 &CPU7>;
 				qcom,cpufreq-memfreq-tbl =
 					< 2112000  921600 >,
 					< 2362000 1612800 >;

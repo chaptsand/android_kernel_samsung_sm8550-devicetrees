@@ -237,3 +237,8 @@
 &ethqos_hw {
 	snps,reset-gpios = <&pm8775_3_gpios 8 GPIO_ACTIVE_HIGH>;
 };
+
+&qupv3_se4_2uart {
+	status = "ok";
+	qcom,auto-suspend-disable;
+};

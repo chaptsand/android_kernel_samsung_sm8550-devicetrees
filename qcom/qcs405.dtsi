@@ -595,7 +595,7 @@
 		};
 	};
 
-	remoteproc_cdsp: remoteproc@800000 {
+	remoteproc_cdsp: remoteproc-cdsp@800000 {
 		compatible = "qcom,qcs405-cdsp-pas";
 		reg = <0x800000 0x00100>;
 
@@ -1073,6 +1073,12 @@
 		qcom,smmu-s1-enable;
 		iommus = <&apps_smmu 0x0066 0x0011>,
 			<&apps_smmu 0x0076 0x0011>;
+		qcom_cedev_ns_cb {
+			compatible = "qcom,qcedev,context-bank";
+			label = "ns_context";
+			iommus = <&apps_smmu 0x0066 0>,
+				<&apps_smmu 0x0076 0>;
+		};
 	};
 
 	qcom_rng: qrng@e3000 {
