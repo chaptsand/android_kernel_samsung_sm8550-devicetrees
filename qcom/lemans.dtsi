@@ -1704,7 +1704,7 @@
 	cdsp1_pas: remoteproc-cdsp1@2a300000 {
 		compatible = "qcom,lemans-cdsp1-pas";
 		reg = <0x2A300000 0x10000>;
-		status = "ok";
+		status = "disabled";
 
 		memory-region = <&rproc_cdsp1_mem>;
 
@@ -1768,7 +1768,7 @@
 	gpdsp0_pas: remoteproc-gpdsp0@20c00000 {
 		compatible = "qcom,lemans-gpdsp0-pas";
 		reg = <0x20c00000 0x10000>;
-		status = "ok";
+		status = "disabled";
 
 		memory-region = <&rproc_gpdsp0_mem>;
 
@@ -1827,7 +1827,7 @@
 	gpdsp1_pas: remoteproc-gpdsp1@21c00000 {
 		compatible = "qcom,lemans-gpdsp1-pas";
 		reg = <0x21c00000 0x10000>;
-		status = "ok";
+		status = "disabled";
 
 		memory-region = <&rproc_gpdsp1_mem>;
 
