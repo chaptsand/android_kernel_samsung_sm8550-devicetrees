@@ -15,4 +15,5 @@
 
 &pcie1 {
 	/delete-property/ qcom,drv-name;
+	/delete-property/ msi-map;
 };
