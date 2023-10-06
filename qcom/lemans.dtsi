@@ -2681,11 +2681,11 @@
 		interrupts = <GIC_SPI 719 IRQ_TYPE_LEVEL_HIGH>;
 		number-of-rate-detectors = <2>;
 		rate-detector-interfaces = <0 1>;
-		number-of-interfaces = <3>;
+		number-of-interfaces = <2>;
 		qcom,smmu-version = <2>;
 		qcom,smmu-enabled;
 		iommus = <&apps_smmu 0x303C 0x1>,
-			 <&apps_smmu 0x303E 0x4>,
+			 <&apps_smmu 0x303A 0x4>,
 			 <&apps_smmu 0x303B 0x0>;
 		qcom,iommu-dma-addr-pool = <0x0 0xFFFFFFFF>;
 		dma-coherent;
@@ -2775,6 +2775,7 @@
 			tdm-sync-delay = <2>;
 			tdm-inv-sync = <0>;
 			pcm-lane-config = <1>;
+			status = "disabled";
 		};
 
 		sdr3: qcom,hs3_i2s {
