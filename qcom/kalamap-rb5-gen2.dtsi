@@ -728,7 +728,7 @@
 
 &pcie1 {
 	pcie-i2c-phandle = <&qupv3_hub_i2c3>;
-	qcom,boot-option = <0x2>;
+	qcom,boot-option = <0x1>;
 	vreg-3p3-supply = <&qps615_resx1_0p9_vreg>;
 	qcom,apss-based-l1ss-sleep;
 	msi-parent = <&pcie1_msi>;
