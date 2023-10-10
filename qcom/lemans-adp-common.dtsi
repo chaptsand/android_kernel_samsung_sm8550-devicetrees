@@ -18,6 +18,15 @@
 			debounce-interval = <0>;
 			wakeup-source;
 		};
+
+		key_power {
+			label = "power";
+			linux,code = <KEY_POWER>;
+			gpios = <&tlmm 59 GPIO_ACTIVE_LOW>;
+			linux,input-type = <1>;
+			debounce-interval = <0>;
+			wakeup-source;
+		};
 	};
 };
 
