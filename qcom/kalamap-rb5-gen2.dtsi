@@ -722,12 +722,16 @@
 	};
 };
 
+&pcie1_msi {
+	status = "ok";
+};
+
 &pcie1 {
 	pcie-i2c-phandle = <&qupv3_hub_i2c3>;
-	qcom,boot-option = <0x2>;
+	qcom,boot-option = <0x1>;
 	vreg-3p3-supply = <&qps615_resx1_0p9_vreg>;
 	qcom,apss-based-l1ss-sleep;
-
+	msi-parent = <&pcie1_msi>;
 	qcom,phy-sequence = <0x1240 0x03 0x0
 			0x0030 0x1d 0x0
 			0x0034 0x03 0x0

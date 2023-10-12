@@ -1704,7 +1704,7 @@
 	cdsp1_pas: remoteproc-cdsp1@2a300000 {
 		compatible = "qcom,lemans-cdsp1-pas";
 		reg = <0x2A300000 0x10000>;
-		status = "ok";
+		status = "disabled";
 
 		memory-region = <&rproc_cdsp1_mem>;
 
@@ -1768,7 +1768,7 @@
 	gpdsp0_pas: remoteproc-gpdsp0@20c00000 {
 		compatible = "qcom,lemans-gpdsp0-pas";
 		reg = <0x20c00000 0x10000>;
-		status = "ok";
+		status = "disabled";
 
 		memory-region = <&rproc_gpdsp0_mem>;
 
@@ -1827,7 +1827,7 @@
 	gpdsp1_pas: remoteproc-gpdsp1@21c00000 {
 		compatible = "qcom,lemans-gpdsp1-pas";
 		reg = <0x21c00000 0x10000>;
-		status = "ok";
+		status = "disabled";
 
 		memory-region = <&rproc_gpdsp1_mem>;
 
@@ -1900,6 +1900,16 @@
 		cell-index = <0>;
 		qcom,channel = <0>;
 		qcom,ee = <0>;
+	};
+
+	kryo_erp: erp {
+		compatible = "arm,arm64-kryo-cpu-erp";
+		interrupts = <GIC_PPI 0 IRQ_TYPE_LEVEL_HIGH>,
+			<GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH>,
+			<GIC_SPI 21 IRQ_TYPE_LEVEL_HIGH>;
+		interrupt-names = "l1-l2-faultirq",
+			"l3-c0-scu-faultirq",
+			"l3-c1-scu-faultirq";
 	};
 
 	thermal_zones: thermal-zones {
@@ -2671,11 +2681,11 @@
 		interrupts = <GIC_SPI 719 IRQ_TYPE_LEVEL_HIGH>;
 		number-of-rate-detectors = <2>;
 		rate-detector-interfaces = <0 1>;
-		number-of-interfaces = <3>;
+		number-of-interfaces = <2>;
 		qcom,smmu-version = <2>;
 		qcom,smmu-enabled;
 		iommus = <&apps_smmu 0x303C 0x1>,
-			 <&apps_smmu 0x303E 0x4>,
+			 <&apps_smmu 0x303A 0x4>,
 			 <&apps_smmu 0x303B 0x0>;
 		qcom,iommu-dma-addr-pool = <0x0 0xFFFFFFFF>;
 		dma-coherent;
@@ -2765,6 +2775,7 @@
 			tdm-sync-delay = <2>;
 			tdm-inv-sync = <0>;
 			pcm-lane-config = <1>;
+			status = "disabled";
 		};
 
 		sdr3: qcom,hs3_i2s {

@@ -9,7 +9,7 @@
 	interrupt-parent = <&intc>;
 
 	chosen {
-		bootargs = "nokaslr log_buf_len=1M console=hvc0 loglevel=8 androidboot.first_stage_console=1 androidboot.hardware=qcom androidboot.slot_suffix=_a androidboot.selinux=permissive";
+		bootargs = "nokaslr log_buf_len=1M console=hvc0 loglevel=8 androidboot.first_stage_console=1 androidboot.hardware=qcom androidboot.slot_suffix=_a androidboot.selinux=enforcing";
 	};
 
 	reserved_memory: reserved-memory {
@@ -381,7 +381,7 @@
 				dma-coherent;
 				dma_base = <0x0 0x240000>;
 				memory {
-					qcom,label = <0x1d>;			/* Input device */
+					qcom,label = <0x1d>;			/* Input device 0 */
 					#address-cells = <0x2>;
 					allocate-base;
 				};
@@ -411,7 +411,37 @@
 				dma-coherent;
 				dma_base = <0x0 0x250000>;
 				memory {
-					qcom,label = <0x1f>;		/* Reserved devices */
+					qcom,label = <0x1f>;			/* Console device */
+					#address-cells = <0x2>;
+					allocate-base;
+				};
+			};
+
+			virtio-mmio@15 {
+				vdevice-type = "virtio-mmio";
+				generate = "/virtio-mmio";
+				peer-default;
+				vqs-num = <0x2>;
+				push-compatible = "virtio,mmio";
+				dma-coherent;
+				dma_base = <0x0 0x258000>;
+				memory {
+					qcom,label = <0x20>;			/* Input device 1 */
+					#address-cells = <0x2>;
+					allocate-base;
+				};
+			};
+
+			virtio-mmio@16 {
+				vdevice-type = "virtio-mmio";
+				generate = "/virtio-mmio";
+				peer-default;
+				vqs-num = <0x2>;
+				push-compatible = "virtio,mmio";
+				dma-coherent;
+				dma_base = <0x0 0x260000>;
+				memory {
+					qcom,label = <0x21>;		/* Reserved devices */
 					#address-cells = <0x2>;
 					allocate-base;
 				};
