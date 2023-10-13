@@ -273,6 +273,72 @@
 	status = "ok";
 };
 
+&qupv3_se1_i2c {
+	status = "ok";
+	qcom,clk-freq-out = <400000>;
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	/* TDK Chirp IO Expander */
+	ch_io_expander@22 {
+		#gpio-cells = <2>;
+		#interrupt-cells = <2>;
+		compatible = "semtech,sx1508q";
+		reg = <0x22>;
+		gpio-controller;
+	};
+};
+
+&qupv3_hub_i2c2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "ok";
+	qcom,clk-freq-out = <400000>;
+
+	/* TDK Chirp 3, 4, and 5 are connected to QUP hub i2c2 */
+	ch101_1: ch101_1@45 {
+		compatible = "invensense,ch101";
+		reg = <0x45>;
+		rst-gpios = <&tlmm 127 GPIO_ACTIVE_HIGH>;
+		rtc_rst-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>;
+		prg-gpios = <3 4 5>;
+		int-gpios = <&tlmm 14 GPIO_ACTIVE_HIGH>,
+			<&tlmm 19 GPIO_ACTIVE_HIGH>,
+			<&tlmm 86 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&qupv3_hub_i2c4 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "ok";
+	qcom,clk-freq-out = <400000>;
+
+	/* TDK Chirp 0, 1, and 2 are connected to QUP hub i2c4 */
+	ch101_0: ch101_0@45 {
+		compatible = "invensense,ch101";
+		reg = <0x45>;
+		rst-gpios = <&tlmm 127 GPIO_ACTIVE_HIGH>;
+		rtc_rst-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>;
+		prg-gpios = <0 1 2>;
+		int-gpios = <&tlmm 18 GPIO_ACTIVE_HIGH>,
+			<&tlmm 129 GPIO_ACTIVE_HIGH>,
+			<&tlmm 17 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&qupv3_se2_spi {
+	status = "okay";
+	temp_sensor@0 {
+		compatible = "tdktherm";
+		reg = <0>; // Chip select ID
+		spi-max-frequency = <10000000>; // Can support up to 24 MHz
+		spi-cpol;
+		spi-cpha;
+		status = "okay";
+	};
+};
+
 &qupv3_se4_spi {
 	#address-cells = <1>;
 	#size-cells = <0>;
