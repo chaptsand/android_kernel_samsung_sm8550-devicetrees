@@ -842,7 +842,7 @@
 
 	apcs_glb: mailbox@b011000 {
 		compatible = "qcom,msm8916-apcs-kpss-global";
-		reg = <0xb011000 0x1000>;
+		reg = <0xb011000 0x10>;
 
 		#mbox-cells = <1>;
 	};
