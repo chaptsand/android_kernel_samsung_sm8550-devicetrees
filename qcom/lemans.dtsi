@@ -369,7 +369,7 @@
 		reg = <0x0 0x90860000 0x0 0x20000>;
 	};
 
-	uefi_log: uefi_log_region@908b0000 {
+	uefi_log: uefi_log@908b0000 {
 		no-map;
 		reg = <0x0 0x908b0000 0x0 0x10000>;
 	};
