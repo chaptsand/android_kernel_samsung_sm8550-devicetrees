@@ -2901,6 +2901,16 @@
 		qcom,primary;
 	};
 
+	qcom_llcc_l3_vote: qcom,llcc-l3-vote {
+		qcom,target-dev = <&qcom_l3_dcvs_hw>;
+		qcom,secondary-map =
+			<  300000  384000 >,
+			<  466500  595200 >,
+			<  600000  710400 >,
+			<  806000  825600 >,
+			< 1066000  998400 >;
+	};
+
 	bwmon_llcc: qcom,bwmon-llcc@240B6300 {
 		compatible = "qcom,bwmon4";
 		reg = <0x240B6400 0x300>, <0x240B6300 0x200>;
@@ -2910,6 +2920,7 @@
 		qcom,hw-timer-hz = <19200000>;
 		qcom,count-unit = <0x10000>;
 		qcom,target-dev = <&qcom_llcc_dcvs_hw>;
+		qcom,second-vote = <&qcom_llcc_l3_vote>;
 	};
 
 	bwmon_ddr: qcom,bwmon-ddr@24091000 {
