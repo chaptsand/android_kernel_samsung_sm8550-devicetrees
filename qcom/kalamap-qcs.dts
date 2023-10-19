@@ -11,6 +11,7 @@
 &pcie0 {
 	/delete-property/ qcom,config-recovery;
 	/delete-property/ qcom,drv-name;
+	/delete-property/ msi-map;
 };
 
 &pcie1 {
