@@ -565,6 +565,12 @@
 		};
 	};
 
+	aop-set-ddr-freq {
+		compatible = "qcom,aop-set-ddr-freq";
+		mboxes = <&qmp_aop 0>;
+		mbox-names = "aop";
+	};
+
 	psci {
 		compatible = "arm,psci-1.0";
 		method = "smc";
