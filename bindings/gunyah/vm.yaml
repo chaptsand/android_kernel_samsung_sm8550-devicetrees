@@ -48,6 +48,13 @@ properties:
   qcom,pasid:
     $ref: '/schemas/types.yaml#/definitions/uint64'
 
+  qcom,qtee-config-info:
+    description: qtee_config_info is maintaining below list of VM config to access QTEE services
+      p: Privileges in hex, represents the lists of QTEE services which VM have privilege to access
+      o: ObjectTable limit in hex, represents max number of QTEE service objects a VM object table can hold
+      lid: ListenerIds in hex to be whitelisted for particular VM
+      ta: AppNames in string to be whitelisted for particular VM
+
   memory:
     properties:
       "#address-cells":
