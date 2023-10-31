@@ -467,6 +467,15 @@
 	};
 };
 
+&qupv3_se4_4uart {
+	status = "ok";
+	qrc:qrc@100 {
+		compatible = "qcom,qrc-uart";
+		status = "ok";
+		qcom,qrc-reset-gpio = <&tlmm 168 0>;
+	};
+};
+
 &usb_qmp_dp_phy {
 	pinctrl-names = "unused";
 
