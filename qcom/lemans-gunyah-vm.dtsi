@@ -375,6 +375,7 @@
 			virtio-mmio@12 {
 				vdevice-type = "virtio-mmio";
 				generate = "/virtio-mmio";
+				virtio,device-type = <18>;		/* VirtIO Input ID */
 				peer-default;
 				vqs-num = <0x2>;
 				push-compatible = "virtio,mmio";
@@ -420,6 +421,7 @@
 			virtio-mmio@15 {
 				vdevice-type = "virtio-mmio";
 				generate = "/virtio-mmio";
+				virtio,device-type = <18>;		/* VirtIO Input ID */
 				peer-default;
 				vqs-num = <0x2>;
 				push-compatible = "virtio,mmio";
