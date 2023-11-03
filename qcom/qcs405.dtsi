@@ -268,8 +268,9 @@
 		reg-names = "cc_base";
 		vdd_cx-supply = <&VDD_CX_LEVEL>;
 		vdd_sr_pll-supply = <&VDD_SR_PLL_LEVEL>;
-		clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>, <&pcie_0_pipe_clk>;
-		clock-names = "bi_tcxo", "pcie_0_pipe_clk";
+		clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>, <&pcie_0_pipe_clk>,
+			 <&rpmcc RPM_SMD_XO_A_CLK_SRC>;
+		clock-names = "bi_tcxo", "pcie_0_pipe_clk", "bi_tcxo_ao";
 		#clock-cells = <1>;
 		#reset-cells = <1>;
 	};
