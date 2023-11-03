@@ -343,6 +343,11 @@
 				cooling-device = <&cxip_cdev 1 1>;
 			};
 
+			cdsp-cx-cdev0 {
+				trip = <&cdsp_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			cdsp-cx-cdev1 {
 				trip = <&cdsp_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -386,6 +391,11 @@
 		};
 
 		cooling-maps {
+			wlan-cx-cdev0 {
+				trip = <&wlan_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			wlan-cx-cdev1 {
 				trip = <&wlan_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -429,6 +439,11 @@
 		};
 
 		cooling-maps {
+			camera-cx-cdev0 {
+				trip = <&camera_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			camera-cx-cdev1 {
 				trip = <&camera_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -472,6 +487,11 @@
 		};
 
 		cooling-maps {
+			video-cx-cdev0 {
+				trip = <&video_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			video-cx-cdev1 {
 				trip = <&video_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -806,6 +826,11 @@
 		};
 
 		cooling-maps {
+			mdm-cx-cdev0 {
+				trip = <&mdm_core_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			mdm-cx-cdev1 {
 				trip = <&mdm_core_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -849,6 +874,11 @@
 		};
 
 		cooling-maps {
+			display-cx-cdev0 {
+				trip = <&display_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			display-cx-cdev1 {
 				trip = <&display_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -898,6 +928,17 @@
 		};
 
 		cooling-maps {
+			gpu_cdev {
+				trip = <&gpu_step_trip>;
+				cooling-device = <&msm_gpu THERMAL_NO_LIMIT
+							THERMAL_NO_LIMIT>;
+			};
+
+			gpu-cx-cdev0 {
+				trip = <&gpu_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			gpu-cx-cdev1 {
 				trip = <&gpu_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -1032,6 +1073,11 @@
 				cooling-device = <&CPU3 0 2>;
 			};
 
+			skin_gpu {
+				trip = <&skin_gpu_trip>;
+				cooling-device = <&msm_gpu 0 4>;
+			};
+
 			modem_lvl1 {
 				trip = <&modem_trip1>;
 				cooling-device = <&modem_pa 1 1>;
@@ -1075,6 +1121,11 @@
 			battery_lvl3 {
 				trip = <&batt_trip3>;
 				cooling-device = <&pmi632_charger 5 5>;
+			};
+
+			cx_skin_gpu {
+				trip = <&cx_emer_trip>;
+				cooling-device = <&msm_gpu 6 6>;
 			};
 		};
 	};
