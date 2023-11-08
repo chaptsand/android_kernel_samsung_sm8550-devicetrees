@@ -26,6 +26,9 @@
 		qcom,rproc-handle = <&aon_pas>;
 		/* GPIO for external flash */
 		qcom,platform-reset-gpio = <&pm5100_gpios 15 0>;
+		clocks = <&rpmcc RPM_SMD_RF_CLK2>;
+		clock-names = "rf_clk2";
+		status = "ok";
 	};
 
 	glink_slatecom:qcom,glink-slatecom-xprt-slate {

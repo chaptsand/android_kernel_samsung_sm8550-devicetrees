@@ -229,10 +229,20 @@
 		};
 
 		cdsp {
-			qcom,instance-id = <0x43>;
+			qcom,instance-id = <QMI_CDSP_INST_ID>;
 
 			cdsp_vdd: cdsp_vdd {
 				qcom,qmi-dev-name = "cpuv_restriction_cold";
+				#cooling-cells = <2>;
+			};
+
+			cdsp_sw: cdsp {
+				qcom,qmi-dev-name = "cdsp_sw";
+				#cooling-cells = <2>;
+			};
+
+			cdsp_hw: hvx {
+				qcom,qmi-dev-name = "cdsp_hw";
 				#cooling-cells = <2>;
 			};
 		};
@@ -290,7 +300,7 @@
 		polling-delay = <0>;
 		thermal-sensors = <&tsens0 1>;
 		trips {
-			active-config0 {
+			thermal-engine-config {
 				temperature = <125000>;
 				hysteresis = <1000>;
 				type = "passive";
@@ -350,7 +360,7 @@
 		polling-delay = <0>;
 		thermal-sensors = <&tsens0 2>;
 		trips {
-			active-config0 {
+			thermal-engine-config {
 				temperature = <125000>;
 				hysteresis = <1000>;
 				type = "passive";
@@ -393,7 +403,7 @@
 		polling-delay = <0>;
 		thermal-sensors = <&tsens0 3>;
 		trips {
-			active-config0 {
+			thermal-engine-config {
 				temperature = <125000>;
 				hysteresis = <1000>;
 				type = "passive";
@@ -436,7 +446,7 @@
 		polling-delay = <0>;
 		thermal-sensors = <&tsens0 4>;
 		trips {
-			active-config0 {
+			thermal-engine-config {
 				temperature = <125000>;
 				hysteresis = <1000>;
 				type = "passive";
@@ -902,7 +912,7 @@
 
 	quiet-therm {
 		polling-delay-passive = <2000>;
-		polling-delay = <0>;
+		polling-delay = <5000>;
 		thermal-sensors = <&pm6125_adc_tm 1>;
 		trips {
 			thermal-engine-config {

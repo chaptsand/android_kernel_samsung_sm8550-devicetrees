@@ -152,7 +152,9 @@ KONA_BOARDS += \
                  kona-rb5-overlay-new.dtbo \
                  kona-iot-v2.1-vc-overlay.dtbo \
 		 kona-7230-iot-rb5-overlay.dtbo \
-		 kona-rb5-overlay.dtbo
+		 kona-rb5-overlay.dtbo \
+		 kona-qrd-wingmate-overlay.dtbo \
+		 kona-mtp-wingmate-overlay.dtbo
 
 
 KONA_LE_BOARDS += \

@@ -84,6 +84,12 @@
 
 		resets = <&gcc GCC_USB2_PHY_PRIM_BCR>;
 		reset-names = "phy_reset";
+
+		qcom,param-override-seq =
+			<0x63 0x6c	/* override_x0 */
+			0xc7 0x70	/* override_x1 */
+			0x17 0x74	/* override x2 */
+			0x03 0x78>;	/* override x3 */
 	};
 
 	/* Primary USB port related QMP PHY */
@@ -301,6 +307,12 @@
 
 		resets = <&gcc GCC_USB2_PHY_SEC_BCR>;
 		reset-names = "phy_reset";
+
+		qcom,param-override-seq =
+			<0x63 0x6c	/* override_x0 */
+			0xc7 0x70	/* override_x1 */
+			0x17 0x74	/* override x2 */
+			0x03 0x78>;	/* override x3 */
 	};
 
 	/* Secondary USB port related QMP PHY */
@@ -512,6 +524,12 @@
 
 		resets = <&gcc GCC_USB3_PHY_TERT_BCR>;
 		reset-names = "phy_reset";
+
+		qcom,param-override-seq =
+			<0x63 0x6c	/* override_x0 */
+			0xc7 0x70	/* override_x1 */
+			0x17 0x74	/* override x2 */
+			0x03 0x78>;	/* override x3 */
 	};
 
 	usb_nop_phy: usb_nop_phy {
