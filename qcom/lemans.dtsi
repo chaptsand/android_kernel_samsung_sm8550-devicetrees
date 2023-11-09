@@ -32,7 +32,7 @@
 		serial0 = &qupv3_se10_2uart;
 		ufshc1 = &ufshc_mem; /* Embedded UFS slot */
 		ufshc2 = &ufshc2_mem; /* Embedded 2nd UFS Slot */
-		i2c4 = &qupv3_se11_i2c;
+		i2c11 = &qupv3_se11_i2c;
 		spi16 = &qupv3_se16_spi;
 		hsuart0 = &qupv3_se17_4uart;
 		hsuart1 = &qupv3_se12_2uart; /* GSI GNSS */
