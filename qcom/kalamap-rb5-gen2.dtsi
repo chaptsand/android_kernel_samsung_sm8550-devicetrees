@@ -181,6 +181,42 @@
 	};
 };
 
+&DBO3 {
+	/delete-property/ gpio;
+};
+
+&pm8550_gpios {
+	pwm_gpio09 {
+		pwm_gpio09_default: pwm_gpio09_default {
+			pins = "gpio9";
+			function = "func1"; /* SF1 For PWM4 */
+			input-disable;
+			output-enable;
+			bias-disable;
+			power-source = <1>; /* 1.8V */
+			qcom,drive-strength = <2>;
+			status = "okay";
+		};
+	};
+};
+
+&spmi_bus {
+	qcom,pm8550@1 {
+		fan0: pwm-fan@0 {
+			compatible = "pwm-fan";
+			status = "ok";
+			pwms = <&pm8550_pwm_2 0 50000>; /* pwm4 */
+			cooling-levels = <0 32 64 128 170 230 255>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&pwm_gpio09_default>;
+		};
+	};
+};
+
+&pm8550_pwm_2 {
+	status = "okay";
+};
+
 &qupv3_se11_spi {
 	status = "ok";
 	can@0 {
