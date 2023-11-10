@@ -30,6 +30,10 @@
 };
 
 &tlmm {
+	/* 32 33 qupv3_se1_i2c for sx1508q */
+	/* 36 - 39 qupv3_se2_spi for tdk temp sensor */
+	qcom,gpios-reserved = <34 35>;
+
 	pice0_usb_power_1p05_default: pice0_usb_power_1p05_default {
 		mux {
 			pins = "gpio179";
