@@ -30,6 +30,10 @@
 };
 
 &tlmm {
+	/* 32 33 qupv3_se1_i2c for sx1508q */
+	/* 36 - 39 qupv3_se2_spi for tdk temp sensor */
+	qcom,gpios-reserved = <34 35>;
+
 	pice0_usb_power_1p05_default: pice0_usb_power_1p05_default {
 		mux {
 			pins = "gpio179";
@@ -692,11 +696,16 @@
 	};
 };
 
+&pcie0_msi {
+	status = "ok";
+};
+
 &pcie0 {
 	qcom,boot-option = <0x2>;
 
 	pcie-i2c-phandle = <&qupv3_hub_i2c4>;
 	vreg-3p3-supply = <&usb_hub_rest_vreg>;
+	msi-parent = <&pcie0_msi>;
 
 	 qcom,pcie-phy-ver = <102>;
 			qcom,phy-sequence = <0x0240 0x03 0x0

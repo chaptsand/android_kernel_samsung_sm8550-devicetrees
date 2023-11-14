@@ -20,7 +20,7 @@
 	blsp1_uart2_console: serial@78b1000 {
 		compatible = "qcom,msm-uartdm", "qcom,msm-uartdm-v1.4";
 		reg = <0x78b1000 0x200>;
-		interrupts = <0 118 0>;
+		interrupts = <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>;
 		clocks = <&gcc GCC_BLSP1_UART2_APPS_CLK>,
 			<&gcc GCC_BLSP1_AHB_CLK>;
 		clock-names = "core", "iface";
