@@ -1477,6 +1477,9 @@
 		reg = <0x17c10000 0x1000>;
 		reg-names = "wdt-base";
 		interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
+		qcom,support-scandump;
+		qcom,scandump-sizes = <0x10100 0x10100 0x10100 0x10100
+					0x18100 0x18100 0x18100 0x18100>;
 	};
 
 	qcom,sps {
