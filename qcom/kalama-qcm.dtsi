@@ -31,8 +31,8 @@
 };
 
 &reserved_memory {
-	hyp_mem: hyp_mem_region@80c00000 {
+	hyp_mem: hyp_mem_region@80e00000 {
 		no-map;
-		reg = <0x0 0x80c00000 0x0 0x600000>;
+		reg = <0x0 0x80e00000 0x0 0x400000>;
 	};
 };
