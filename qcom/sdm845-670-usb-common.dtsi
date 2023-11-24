@@ -55,12 +55,12 @@
 			reg = <0x0a600000 0xcd00>;
 
 			iommus = <&apps_smmu 0x740 0x0>;
-			qcom,iommu-dma = "bypass";
+			qcom,iommu-dma = "atomic";
+			qcom,iommu-dma-addr-pool = <0x90000000 0x60000000>;
 
 			interrupts = <0 133 IRQ_TYPE_LEVEL_HIGH>;
 			usb-phy = <&qusb_phy0>, <&usb_qmp_dp_phy>;
 			tx-fifo-resize;
-			linux,sysdev_is_parent;
 			snps,disable-clk-gating;
 			snps,has-lpm-erratum;
 			snps,hird-threshold = /bits/ 8 <0x10>;
