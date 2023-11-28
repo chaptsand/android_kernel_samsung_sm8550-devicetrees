@@ -1338,7 +1338,7 @@
 			<0x4064000 0x16000>;
 		reg-names = "tmc-base", "bam-base";
 
-		qcom,iommu-dma = "default";
+		qcom,iommu-dma = "bypass";
 		iommus = <&apps_smmu 0x04e0 0x40>,
 			<&apps_smmu 0x04a0 0x0>;
 
@@ -1358,6 +1358,7 @@
 		interrupts = <GIC_SPI 270 IRQ_TYPE_EDGE_RISING>;
 		interrupt-names = "byte-cntr-irq";
 
+		arm,scatter-gather;
 		clocks = <&aoss_qmp QDSS_CLK>;
 		clock-names = "apb_pclk";
 		in-ports {
@@ -1394,8 +1395,9 @@
 		byte-cntr-class-name = "coresight-tmc-etr1-stream";
 		clocks = <&aoss_qmp QDSS_CLK>;
 		clock-names = "apb_pclk";
+		arm,scatter-gather;
 
-		qcom,iommu-dma = "default";
+		qcom,iommu-dma = "bypass";
 		iommus = <&apps_smmu 0x04c0 0x00>,
 					<&apps_smmu 0x04E0 0x40>,
 					<&apps_smmu 0x04A0 0x40>;
