@@ -15,7 +15,6 @@
 
 &usb0 {
 	qcom,pm-qos-latency = <67>; /* CPU WFI latency + 1 */
-	extcon = <0>, <0>, <&eud>, <0>, <0>;
 };
 
 &qusb_phy0 {
