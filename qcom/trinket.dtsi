@@ -524,11 +524,12 @@
 			reg = <0x0 0x5f800000 0x0 0x1e00000>;
 		};
 
-		/* QSEECOM (20 MB) */
-		qseecom_mem: qseecom_region@5e400000 {
+		qseecom_mem: qseecom_region {
 			compatible = "shared-dma-pool";
-			no-map;
-			reg = <0x0 0x5e400000 0x0 0x1400000>;
+			alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
+			reusable;
+			alignment = <0x0 0x400000>;
+			size = <0x0 0x1400000>;
 		};
 
 		/* user_config (16 MB) */
@@ -1189,6 +1190,13 @@
 			<&rpmcc RPM_SMD_CE1_CLK>;
 		qcom,ce-opp-freq = <171430000>;
 		qcom,qsee-reentrancy-support = <2>;
+	};
+
+	qcom_smcinvoke: smcinvoke@46d00000 {
+		compatible = "qcom,smcinvoke";
+		qcom,support-legacy_smc;
+		reg = <0x46d00000 0x2200000>;
+		reg-names = "secapp-region";
 	};
 
 	qcom_tzlog: tz-log@0c125720 {

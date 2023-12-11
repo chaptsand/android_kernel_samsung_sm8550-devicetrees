@@ -39,12 +39,6 @@
 	qcom,cpu-pause {
 		compatible = "qcom,thermal-pause";
 
-		cpu0_pause: cpu0-pause {
-			qcom,cpus = <&CPU0>;
-			qcom,cdev-alias = "thermal-pause-1";
-			#cooling-cells = <2>;
-		};
-
 		cpu1_pause: cpu1-pause {
 			qcom,cpus = <&CPU1>;
 			qcom,cdev-alias = "thermal-pause-2";
@@ -88,11 +82,6 @@
 		};
 
 		/* Thermal-engine cooling devices */
-		pause-cpu0 {
-			qcom,cpus = <&CPU0>;
-			qcom,cdev-alias = "pause-cpu0";
-		};
-
 		pause-cpu1 {
 			qcom,cpus = <&CPU1>;
 			qcom,cdev-alias = "pause-cpu1";
@@ -177,7 +166,6 @@
 
 	qcom,cpufreq-cdev {
 		compatible = "qcom,cpufreq-cdev";
-		qcom,cpus = <&CPU0 &CPU4>;
 		cpu-cluster0 {
 			qcom,cpus = <&CPU0 &CPU1 &CPU2 &CPU3>;
 		};
@@ -235,16 +223,6 @@
 				qcom,qmi-dev-name = "cpuv_restriction_cold";
 				#cooling-cells = <2>;
 			};
-
-			cdsp_sw: cdsp {
-				qcom,qmi-dev-name = "cdsp_sw";
-				#cooling-cells = <2>;
-			};
-
-			cdsp_hw: hvx {
-				qcom,qmi-dev-name = "cdsp_hw";
-				#cooling-cells = <2>;
-			};
 		};
 	};
 
@@ -260,6 +238,11 @@
 		/* 2nd and 3rd offsets to bypass VICTIM1 */
 		qcom,bypass-client-list = <0xa004 0xc004 0xc008>;
 		#cooling-cells = <2>;
+	};
+
+	qcom,devfreq-cdev {
+		compatible = "qcom,devfreq-cdev";
+		qcom,devfreq = <&msm_gpu>;
 	};
 };
 
@@ -343,6 +326,11 @@
 				cooling-device = <&cxip_cdev 1 1>;
 			};
 
+			cdsp-cx-cdev0 {
+				trip = <&cdsp_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			cdsp-cx-cdev1 {
 				trip = <&cdsp_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -386,6 +374,11 @@
 		};
 
 		cooling-maps {
+			wlan-cx-cdev0 {
+				trip = <&wlan_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			wlan-cx-cdev1 {
 				trip = <&wlan_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -429,6 +422,11 @@
 		};
 
 		cooling-maps {
+			camera-cx-cdev0 {
+				trip = <&camera_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			camera-cx-cdev1 {
 				trip = <&camera_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -472,6 +470,11 @@
 		};
 
 		cooling-maps {
+			video-cx-cdev0 {
+				trip = <&video_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			video-cx-cdev1 {
 				trip = <&video_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -515,11 +518,6 @@
 		};
 
 		cooling-maps {
-			cpu0_cdev {
-				trip = <&silv_cpus_config>;
-				cooling-device = <&cpu0_pause 1 1>;
-			};
-
 			cpu1_cdev {
 				trip = <&silv_cpus_config>;
 				cooling-device = <&cpu1_pause 1 1>;
@@ -806,6 +804,11 @@
 		};
 
 		cooling-maps {
+			mdm-cx-cdev0 {
+				trip = <&mdm_core_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			mdm-cx-cdev1 {
 				trip = <&mdm_core_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -849,6 +852,11 @@
 		};
 
 		cooling-maps {
+			display-cx-cdev0 {
+				trip = <&display_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			display-cx-cdev1 {
 				trip = <&display_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -898,6 +906,17 @@
 		};
 
 		cooling-maps {
+			gpu_cdev {
+				trip = <&gpu_step_trip>;
+				cooling-device = <&msm_gpu THERMAL_NO_LIMIT
+							THERMAL_NO_LIMIT>;
+			};
+
+			gpu-cx-cdev0 {
+				trip = <&gpu_cx_mon>;
+				cooling-device = <&msm_gpu 6 6>;
+			};
+
 			gpu-cx-cdev1 {
 				trip = <&gpu_cx_mon>;
 				cooling-device = <&modem_proc 3 3>;
@@ -1032,6 +1051,11 @@
 				cooling-device = <&CPU3 0 2>;
 			};
 
+			skin_gpu {
+				trip = <&skin_gpu_trip>;
+				cooling-device = <&msm_gpu 0 4>;
+			};
+
 			modem_lvl1 {
 				trip = <&modem_trip1>;
 				cooling-device = <&modem_pa 1 1>;
@@ -1075,6 +1099,11 @@
 			battery_lvl3 {
 				trip = <&batt_trip3>;
 				cooling-device = <&pmi632_charger 5 5>;
+			};
+
+			cx_skin_gpu {
+				trip = <&cx_emer_trip>;
+				cooling-device = <&msm_gpu 6 6>;
 			};
 		};
 	};

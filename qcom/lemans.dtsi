@@ -25,7 +25,7 @@
 	reserved_memory: reserved-memory { };
 
 	chosen: chosen {
-		bootargs = "qcom_dma_heaps.enable_bitstream_contig_heap=y kpti=0 cpufreq.default_governor=performance";
+		bootargs = "qcom_dma_heaps.enable_bitstream_contig_heap=y kpti=0 cpufreq.default_governor=performance rcupdate.rcu_expedited=1";
 	};
 
 	aliases {
@@ -1939,9 +1939,8 @@
 
 	ufshc_mem: ufshc@1d84000 {
 		compatible = "qcom,ufshc";
-		reg = <0x1d84000 0x3000>,
-		<0x1d88000 0x8000>;
-		reg-names = "ufs_mem", "ufs_ice";
+		reg = <0x1d84000 0x3000>;
+		reg-names = "ufs_mem";
 		interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
 		phys = <&ufsphy_mem>;
 		phy-names = "ufsphy";
@@ -2083,9 +2082,8 @@
 
 	ufshc2_mem: ufshc2@1da4000 {
 		compatible = "qcom,ufshc";
-		reg = <0x1da4000 0x3000>,
-		<0x1da8000 0x8000>;
-		reg-names = "ufs_mem", "ufs_ice";
+		reg = <0x1da4000 0x3000>;
+		reg-names = "ufs_mem";
 		interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>;
 		phys = <&ufs2phy_mem>;
 		phy-names = "ufsphy";
@@ -2642,8 +2640,8 @@
 				<&gcc GCC_SGMI_CLKREF_EN>,
 				<&gcc GCC_EMAC0_RGMII_CLK>;
 		clock-names = "stmmaceth", "pclk", "ptp_ref", "phyaux","sgmi_ref","rgmii";
-		snps,ptp-ref-clk-rate = <250000000>;
-		snps,ptp-req-clk-rate = <96000000>;
+		snps,ptp-ref-clk-rate = <230400000>;
+		snps,ptp-req-clk-rate = <125000000>;
 		interrupts-extended = <&intc 0 946 4>;
 		qcom,arm-smmu;
 		gdsc-off-on-suspend;

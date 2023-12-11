@@ -31,9 +31,9 @@
 };
 
 &reserved_memory {
-	hyp_mem: hyp_mem_region@80c00000 {
+	hyp_mem: hyp_mem_region@80e00000 {
 		no-map;
-		reg = <0x0 0x80c00000 0x0 0x600000>;
+		reg = <0x0 0x80e00000 0x0 0x400000>;
 	};
 };
 
@@ -74,6 +74,7 @@
 		qcom,ee = <0>;
 		qcom,ipa-config-is-auto;
 		qcom,ipa-config-is-apq-dma; /* APQ DMA Use Case*/
+		qcom,ipa-config-is-apq-no-uc-load; /* APQ No uC loading*/
 		qcom,entire-ipa-block-size = <0x200000>;
 		qcom,use-ipa-tethering-bridge;
 		qcom,mhi-event-ring-id-limits = <9 11>; /* start and end */

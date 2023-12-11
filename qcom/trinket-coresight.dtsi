@@ -58,10 +58,11 @@
 				<&apps_smmu 0x0a0 0>;
 
 		arm,buffer-size = <0x400000>;
+		arm,scatter-gather;
 
 		coresight-name = "coresight-tmc-etr";
 		qcom,mem_support;
-		qcom,sw-usb;
+		usb_bam_support;
 		qcom,iommu-dma = "bypass";
 		qcom,iommu-dma-addr-pool = <0x0 0xffc00000>;
 
