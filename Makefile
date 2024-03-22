@@ -7,3 +7,5 @@ ifneq "$(wildcard $(vendor)/qcom)" ""
 	subdir-y += qcom/mmrm
 	subdir-y += qcom/video
 endif
+
+subdir-y += samsung
