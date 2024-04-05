@@ -44,6 +44,13 @@ SAMSUNG_KALAMA_BOARDS += \
     dm3q_eur_openx_w00_r13.dtbo
 endif
 
+ifeq ($(CONFIG_SEC_PLATFORM_Q5Q),y)
+SAMSUNG_KALAMA_BOARDS += \
+    q5q_eur_openx_w00_r04.dtbo \
+    q5q_eur_openx_w00_r06.dtbo \
+    q5q_eur_openx_w00_r09.dtbo
+endif
+
 kalama-overlays-dtb-y += $(SAMSUNG_KALAMA_BOARDS) $(KALAMA_BASE_DTB) $(KALAMA_APQ_BASE_DTB)
 dtb-y += $(SAMSUNG_KALAMA_BOARDS) $(KALAMA_BASE_DTB) $(KALAMA_APQ_BASE_DTB)
 
