@@ -30,6 +30,20 @@ SAMSUNG_KALAMA_BOARDS += \
     dm2q_chn_hkx_w00_r11.dtbo
 endif
 
+ifeq ($(CONFIG_SEC_PLATFORM_DM3Q),y)
+SAMSUNG_KALAMA_BOARDS += \
+    dm3q_eur_openx_w00_r01.dtbo \
+    dm3q_eur_openx_w00_r02.dtbo \
+    dm3q_eur_openx_w00_r03.dtbo \
+    dm3q_eur_openx_w00_r04.dtbo \
+    dm3q_eur_openx_w00_r05.dtbo \
+    dm3q_eur_openx_w00_r06.dtbo \
+    dm3q_eur_openx_w00_r08.dtbo \
+    dm3q_eur_openx_w00_r09.dtbo \
+    dm3q_eur_openx_w00_r11.dtbo \
+    dm3q_eur_openx_w00_r13.dtbo
+endif
+
 kalama-overlays-dtb-y += $(SAMSUNG_KALAMA_BOARDS) $(KALAMA_BASE_DTB) $(KALAMA_APQ_BASE_DTB)
 dtb-y += $(SAMSUNG_KALAMA_BOARDS) $(KALAMA_BASE_DTB) $(KALAMA_APQ_BASE_DTB)
 
