@@ -14772,7 +14772,6 @@
 				sec,area-size = <0x85 0x10a 0x155>;
 				sec,max_coords = <0x1000 0x1000>;
 				enable_settings_aot;
-				support_dex_mode;
 				support_mis_calibration_test;
 				support_ear_detect_mode;
 				support_open_short_test;
@@ -15068,7 +15067,6 @@
 				sec,area-size = <0x85 0x10a 0x155>;
 				sec,max_coords = <0x1000 0x1000>;
 				enable_settings_aot;
-				support_dex_mode;
 				support_mis_calibration_test;
 				support_open_short_test;
 				sec,firmware_name = "tsp_stm/fst2ca78y_q5.bin";
