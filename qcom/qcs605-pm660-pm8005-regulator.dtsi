@@ -24,6 +24,7 @@
 	/delete-node/ rpmh-regulator-ldoa15;
 	/delete-node/ rpmh-regulator-ldoa16;
 	/delete-node/ rpmh-regulator-ldoa17;
+	/delete-node/ rpmh-regulator-ldoa18;
 	/delete-node/ rpmh-regulator-ldoa19;
 	/delete-node/ rpmh-regulator-ldob1;
 	/delete-node/ rpmh-regulator-ldob2;

@@ -93,9 +93,9 @@
 	qcom,vdd-io-voltage-level = <1800000 1800000>;
 	qcom,vdd-io-current-level = <0 325000>;
 
-	pinctrl-names = "active", "sleep";
-	pinctrl-0 = <&sdc1_clk_on  &sdc1_cmd_on &sdc1_data_on &sdc1_rclk_on>;
-	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off &sdc1_rclk_off>;
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&sdc1_on>;
+	pinctrl-1 = <&sdc1_off>;
 
 	status = "ok";
 };
@@ -109,9 +109,9 @@
 	qcom,vdd-io-voltage-level = <1800000 2960000>;
 	qcom,vdd-io-current-level = <0 22000>;
 
-	pinctrl-names = "active", "sleep";
-	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
-	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&sdc2_on>;
+	pinctrl-1 = <&sdc2_off>;
 
 	cd-gpios = <&tlmm 96 0x1>;
 
@@ -129,6 +129,16 @@
 
 &pm660_fg {
 	qcom,battery-data = <&mtp_batterydata>;
+	io-channels = <&pm660_rradc 0>,
+		      <&pm660_rradc 7>,
+		      <&smb1355_charger_0 PSY_IIO_CHARGING_ENABLED>,
+		      <&pm660_charger PSY_IIO_CHARGE_QNOVO_ENABLE>,
+		      <&pm660_charger PSY_IIO_CHARGE_DONE>;
+	io-channel-names = "rradc_batt_id",
+			   "rradc_die_temp",
+			   "charging_enabled",
+			   "charge_qnovo_enable",
+			   "charge_done";
 };
 
 &pm660_charger {
@@ -157,13 +167,18 @@
 			&smb_shutdown_default>;
 	interrupt-parent = <&tlmm>;
 	interrupts = <54 IRQ_TYPE_LEVEL_LOW>;
-	smb1355_charger: qcom,smb1355-charger@1000 {
-		io-channels = <&pm660_rradc 2>,
-				<&pm660_rradc 12>;
-		io-channel-names = "charger_temp",
-				"charger_temp_max";
-		status ="ok";
-	};
+	status ="ok";
+
+};
+
+&smb1355_charger {
+	#io-channel-cells = <1>;
+
+	io-channels = <&pm660_rradc 2>,
+			<&pm660_rradc 12>;
+	io-channel-names = "charger_temp",
+			"charger_temp_max";
+	status ="ok";
 };
 
 &smb1355_0 {
@@ -172,13 +187,18 @@
 			&smb_shutdown_default>;
 	interrupt-parent = <&tlmm>;
 	interrupts = <54 IRQ_TYPE_LEVEL_LOW>;
-	smb1355_charger_0: qcom,smb1355-charger@1000 {
-		io-channels = <&pm660_rradc 2>,
-				<&pm660_rradc 12>;
-		io-channel-names = "charger_temp",
-				"charger_temp_max";
-		status ="ok";
-	};
+	status ="ok";
+
+};
+
+&smb1355_charger_0 {
+	#io-channel-cells = <1>;
+
+	io-channels = <&pm660_rradc 2>,
+			<&pm660_rradc 12>;
+	io-channel-names = "charger_temp",
+			"charger_temp_max";
+	status ="ok";
 };
 
 &soc {

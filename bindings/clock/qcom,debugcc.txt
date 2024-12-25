@@ -28,6 +28,7 @@ Required properties :
 			"qcom,monaco_auto-debugcc"
 			"qcom,trinket-debugcc"
 			"qcom,sdm845-debugcc"
+			"qcom,sm6115-debugcc"
 
 - qcom,gcc: phandle to the GCC device node.
 - qcom,videocc: phandle to the Video CC device node.

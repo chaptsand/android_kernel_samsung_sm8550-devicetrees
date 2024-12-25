@@ -3,7 +3,6 @@
 #include <dt-bindings/spmi/spmi.h>
 #include <dt-bindings/iio/qcom,spmi-adc5-gen3-pmk8550.h>
 #include <dt-bindings/iio/qcom,spmi-adc5-gen3-pm8550.h>
-#include <dt-bindings/iio/qcom,spmi-adc5-gen3-pm8550b.h>
 #include <dt-bindings/iio/qcom,spmi-adc5-gen3-pm8550vx.h>
 
 &spmi_bus {
@@ -193,43 +192,6 @@
 			pm8550_vph_pwr {
 				reg = <PM8550_ADC5_GEN3_VPH_PWR>;
 				label = "pm8550_vph_pwr";
-				qcom,pre-scaling = <1 3>;
-			};
-
-			/* PM8550B Channel nodes */
-			pm8550b_offset_ref {
-				reg = <PM8550B_ADC5_GEN3_OFFSET_REF>;
-				label = "pm8550b_offset_ref";
-				qcom,pre-scaling = <1 1>;
-			};
-
-			pm8550b_vref_1p25 {
-				reg = <PM8550B_ADC5_GEN3_1P25VREF>;
-				label = "pm8550b_vref_1p25";
-				qcom,pre-scaling = <1 1>;
-			};
-
-			pm8550b_die_temp {
-				reg = <PM8550B_ADC5_GEN3_DIE_TEMP>;
-				label = "pm8550b_die_temp";
-				qcom,pre-scaling = <1 1>;
-			};
-
-			pm8550b_lite_die_temp {
-				reg = <PM8550B_ADC5_GEN3_TEMP_ALARM_LITE>;
-				label = "pm8550b_lite_die_temp";
-				qcom,pre-scaling = <1 1>;
-			};
-
-			pm8550b_vph_pwr {
-				reg = <PM8550B_ADC5_GEN3_VPH_PWR>;
-				label = "pm8550b_vph_pwr";
-				qcom,pre-scaling = <1 3>;
-			};
-
-			pm8550b_vbat_sns_qbg {
-				reg = <PM8550B_ADC5_GEN3_VBAT_SNS_QBG>;
-				label = "pm8550b_vbat_sns_qbg";
 				qcom,pre-scaling = <1 3>;
 			};
 

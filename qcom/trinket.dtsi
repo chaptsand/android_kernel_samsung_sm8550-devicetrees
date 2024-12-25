@@ -13,7 +13,7 @@
 / {
 	model = "Qualcomm Technologies, Inc. Trinket";
 	compatible = "qcom,trinket";
-	qcom,msm-id = <467 0x10000>;
+	qcom,msm-id = <394 0x10000>;
 	interrupt-parent = <&intc>;
 
 	#address-cells = <2>;
@@ -430,7 +430,12 @@
 	};
 
 	chosen {
-		bootargs = "console=ttyMSM0,115200n8 loglevel=6 kpti=0 log_buf_len=256K kernel.panic_on_rcu_stall=1 rcupdate.rcu_expedited=1 rcu_nocbs=0-7 ftrace_dump_on_oops fw_devlink.strict=1 printk.console_no_auto_verbose=1 qcom_dma_heaps.enable_bitstream_contig_heap=y";
+		bootargs = "console=ttyMSM0,115200n8 loglevel=6 kpti=0 log_buf_len=256K kernel.panic_on_rcu_stall=1 rcupdate.rcu_expedited=1 rcu_nocbs=0-7 ftrace_dump_on_oops fw_devlink.strict=1 printk.console_no_auto_verbose=1 qcom_dma_heaps.enable_bitstream_contig_heap=y ssbd=force-off";
+	};
+
+	boot_device_type {
+		nvmem-cells = <&boot_config>;
+		nvmem-cell-names = "boot_conf";
 	};
 
 	reserved-memory {
@@ -1002,6 +1007,11 @@
 			qcom,dump-id = <0xea>;
 		};
 
+		c_scandump {
+			qcom,dump-size = <0x40000>;
+			qcom,dump-id = <0xeb>;
+		};
+
 		pmic {
 			qcom,dump-size = <0x10000>;
 			qcom,dump-id = <0xe4>;
@@ -1568,6 +1578,10 @@
 		#size-cells = <1>;
 		read-only;
 		ranges;
+
+		boot_config: boot_config@6070 {
+			reg = <0x6070 0x4>;
+		};
 	};
 
 	qcom,msm-cdsp-loader {
@@ -1723,8 +1737,14 @@
 		#reset-cells = <1>;
 	};
 
+	cpucc_debug: syscon@f11101c {
+		compatible = "syscon";
+		reg = <0xf11101c 0x4>;
+	};
+
 	debugcc: clock-controller@0 {
 		compatible = "qcom,trinket-debugcc";
+		qcom,cpucc = <&cpucc_debug>;
 		qcom,dispcc = <&dispcc>;
 		qcom,gcc = <&gcc>;
 		qcom,gpucc = <&gpucc>;
@@ -1935,6 +1955,8 @@
 		qcom,iommu-dma = "atomic";
 
 		bus-width = <8>;
+		nvmem-cells = <&boot_config>;
+		nvmem-cell-names = "boot_conf";
 		non-removable;
 
 		cap-mmc-hw-reset;
@@ -2241,8 +2263,14 @@
 		phy-names = "ufsphy";
 		#reset-cells = <1>;
 
+		qcom,dynamic-irq-affinity;
+
 		lanes-per-direction = <1>;
 		dev-ref-clk-freq = <0>; /* 19.2 MHz */
+
+		nvmem-cells = <&boot_config>;
+		nvmem-cell-names = "boot_conf";
+		non-removable;
 
 		clock-names =
 			"core_clk",
@@ -2316,12 +2344,11 @@
 		status = "disabled";
 
 		qos0 {
-			mask = <0x0f>;
 			vote = <44>;
+			perf;
 		};
 
 		qos1 {
-			mask = <0xf0>;
 			vote = <44>;
 		};
 	};
@@ -2667,6 +2694,33 @@
 &L7P {
 	regulator-min-microvolt = <3000000>;
 	regulator-max-microvolt = <3000000>;
+};
+
+&qupv3_se2_i2c {
+	status = "okay";
+	qcom,i2c-touch-active="synaptics,tcm-i2c";
+
+	synaptics_tcm@20 {
+		compatible = "synaptics,tcm-i2c";
+		reg = <0x20>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <88 0x2008>;
+		pinctrl-names = "pmx_ts_active","pmx_ts_suspend",
+			"pmx_ts_release";
+		pinctrl-0 = <&ts_int_active &ts_reset_active>;
+		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
+		pinctrl-2 = <&ts_release>;
+		synaptics,irq-gpio = <&tlmm 88 0x2008>;
+		synaptics,irq-on-state = <0>;
+		synaptics,reset-gpio = <&tlmm 87 0x00>;
+		synaptics,reset-on-state = <0>;
+		synaptics,reset-active-ms = <20>;
+		synaptics,reset-delay-ms = <200>;
+		synaptics,power-delay-ms = <200>;
+		synaptics,ubl-i2c-addr = <0x20>;
+		synaptics,y-flip;
+
+	};
 };
 
 #include "trinket-thermal.dtsi"

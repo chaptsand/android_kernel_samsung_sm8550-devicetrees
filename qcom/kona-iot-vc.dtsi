@@ -227,7 +227,31 @@
 		      <&pm8150b_fg PSY_IIO_CHARGE_COUNTER>,
 		      <&pm8150b_fg PSY_IIO_CYCLE_COUNT>,
 		      <&pm8150b_fg PSY_IIO_CHARGE_FULL_DESIGN>,
-		      <&pm8150b_fg PSY_IIO_TIME_TO_FULL_NOW>;
+		      <&pm8150b_fg PSY_IIO_TIME_TO_FULL_NOW>,
+		      <&pm8150b_fg PSY_IIO_VOLTAGE_OCV>,
+		      <&pm8150b_fg PSY_IIO_CAPACITY_RAW>,
+		      <&pm8150b_fg PSY_IIO_RESISTANCE>,
+		      <&pm8150b_fg PSY_IIO_ESR_ACTUAL>,
+		      <&pm8150b_fg PSY_IIO_ESR_NOMINAL>,
+		      <&pm8150b_fg PSY_IIO_CHARGE_NOW_RAW>,
+		      <&pm8150b_fg PSY_IIO_CHARGE_COUNTER_SHADOW>,
+		      <&pm8150b_fg PSY_IIO_SOC_REPORTING_READY>,
+		      <&pm8150b_fg PSY_IIO_CLEAR_SOH>,
+		      <&pm8150b_fg PSY_IIO_SOH>,
+		      <&pm8150b_fg PSY_IIO_CC_STEP>,
+		      <&pm8150b_fg PSY_IIO_CC_STEP_SEL>,
+		      <&pm8150b_fg PSY_IIO_BATT_AGE_LEVEL>,
+		      <&pm8150b_fg PSY_IIO_SCALE_MODE_EN>,
+		      <&pm8150b_fg PSY_IIO_VOLTAGE_AVG>,
+		      <&pm8150b_fg PSY_IIO_CURRENT_AVG>,
+		      <&pm8150b_fg PSY_IIO_VOLTAGE_MAX_DESIGN>,
+		      <&pm8150b_fg PSY_IIO_CHARGE_NOW>,
+		      <&pm8150b_fg PSY_IIO_CONSTANT_CHARGE_VOLTAGE>,
+		      <&pm8150b_fg PSY_IIO_TIME_TO_FULL_AVG>,
+		      <&pm8150b_fg PSY_IIO_TIME_TO_EMPTY_AVG>,
+		      <&pm8150b_fg PSY_IIO_POWER_AVG>,
+		      <&pm8150b_fg PSY_IIO_POWER_NOW>,
+		      <&pm8150b_fg PSY_IIO_CALIBRATE>;
 	io-channel-names = "usb_in_voltage",
 			   "usb_in_current",
 			   "sbux_res",
@@ -248,7 +272,30 @@
 			   "charge_counter",
 			   "cycle_count",
 			   "charge_full_design",
-			   "time_to_full_now";
+			   "time_to_full_now",
+			   "voltage_ocv",
+			   "capacity_raw",
+			   "resistance",
+			   "esr_actual",
+			   "esr_nominal",
+			   "charge_now_raw",
+			   "charge_counter_shadow",
+			   "soc_reporting_ready",
+			   "clear_soh",
+			   "soh",
+			   "cc_step",
+			   "cc_step_sel",
+			   "batt_age_level",
+			   "scale_mode_en",
+			   "voltage_avg",
+			   "voltage_max_design",
+			   "charge_now",
+			   "constant_charge_voltage",
+			   "time_to_full_avg",
+			   "time_to_empty_avg",
+			   "power_avg",
+			   "power_now",
+			   "calibrate";
 	qcom,batteryless-platform;
 	qcom,sw-jeita-enable;
 	qcom,wd-bark-time-secs = <16>;
@@ -262,8 +309,12 @@
 &pm8150b_fg {
 	status = "ok";
 	#io-channel-cells = <1>;
-	io-channels = <&pm8150b_charger PSY_IIO_CHARGE_DONE>;
-	io-channel-names = "charge_done";
+	io-channels = <&pm8150b_charger PSY_IIO_CHARGE_DONE>,
+		      <&pm8150b_charger PSY_IIO_CHARGE_QNOVO_ENABLE>,
+		      <&pm8150b_charger PSY_IIO_RECHARGE_SOC>;
+	io-channel-names = "charge_done",
+			   "qnovo_enable",
+			   "recharge_soc";
 	qcom,battery-data = <&kona_qrd_batterydata>;
 	qcom,hold-soc-while-full;
 	qcom,linearize-soc;

@@ -56,6 +56,7 @@ on the Qualcomm Technologies inc ADSP Hexagon core.
 		    "qcom,kona-adsp-pas"
 		    "qcom,kona-cdsp-pas"
 		    "qcom,kona-slpi-pas"
+			"qcom,kona-npu-pas"
 		    "qcom,crow-wpss-pas"
 		    "qcom,crow-adsp-pas"
 		    "qcom,crow-cdsp-pas"
@@ -65,7 +66,11 @@ on the Qualcomm Technologies inc ADSP Hexagon core.
 		    "qcom,trinket-cdsp-pas"
 		    "qcom,qcs605-adsp-pas"
 		    "qcom,qcs605-cdsp-pas"
-		    "qcom,qcs605-modem-pas"
+		    "qcom,bengal-adsp-pas"
+		    "qcom,bengal-cdsp-pas"
+		    "qcom,bengal-modem-pas"
+		    "qcom,scuba-adsp-pas"
+		    "qcom,scuba-modem-pas"
 
 - interrupts-extended:
 	Usage: required

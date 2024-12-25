@@ -13,7 +13,7 @@
 		key_sleep {
 			label = "sleep";
 			linux,code = <KEY_SLEEP>;
-			gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
+			gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
 			linux,input-type = <1>;
 			debounce-interval = <0>;
 			wakeup-source;
@@ -22,7 +22,7 @@
 		key_power {
 			label = "power";
 			linux,code = <KEY_POWER>;
-			gpios = <&tlmm 59 GPIO_ACTIVE_LOW>;
+			gpios = <&tlmm 59 GPIO_ACTIVE_HIGH>;
 			linux,input-type = <1>;
 			debounce-interval = <0>;
 			wakeup-source;

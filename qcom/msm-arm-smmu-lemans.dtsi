@@ -281,6 +281,11 @@
 		};
 	};
 
+	dma_dev@0x0 {
+		compatible = "qcom,iommu-dma";
+		memory-region = <&system_cma>;
+	};
+
 	pcie_smmu: pcie-smmu@0x15200000 {
 		compatible = "qcom,qsmmu-v500";
 		reg = <0x15200000 0x80000>,

@@ -38,3 +38,7 @@
 	qcom,apss-based-l1ss-sleep;
 	qcom,no-client-based-bw-voting;
 };
+
+&qcom_qbt {
+	status = "disabled";
+};

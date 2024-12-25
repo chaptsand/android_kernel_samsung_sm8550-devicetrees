@@ -26,6 +26,8 @@ Required properties:
 			 present on Kalama chipsets.
 			"qcom,ufs-phy-qmp-v4-khaje" for ufs phy
 			 present on khaje chipsets.
+			"qcom,ufs-phy-qmp-v3-660" for ufs phy
+			 present on bengal chipsets.
 			"qcom,ufs-phy-qmp-v4-kona" for ufs phy
 			 present on kona chipsets.
 			"qcom,ufs-phy-qmp-v4-crow" for ufs phy

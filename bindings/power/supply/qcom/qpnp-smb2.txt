@@ -19,7 +19,8 @@ Charger specific properties:
 - compatible
   Usage:      required
   Value type: <string>
-  Definition: "qcom,qpnp-smb2".
+  Definition: "qcom,pm660-smb2" for SMB2 on PM660
+	      "qcom,pmi8998-smb2" for SMB2 on PMI8998.
 
 - qcom,pmic-revid
   Usage:      required
@@ -91,6 +92,15 @@ Charger specific properties:
 		This should be a flat array that denotes the
 		maximum charge current in mA for each thermal
 		level.
+
+- #io-channel-cells:
+  Usage: required
+  Value type: <u32>
+  Definition: Number of cells in an IIO specifier.
+		Needed to indicate other clients can query charger for
+		IIO channels.
+		For details about IIO bindings see:
+		Documentation/devicetree/bindings/iio/iio-bindings.txt
 
 - io-channels
   Usage:      optional
@@ -242,9 +252,10 @@ Example
 =======
 
 pmi8998_charger: qcom,qpnp-smb2 {
-	compatible = "qcom,qpnp-smb2";
+	compatible = "qcom,pmi8998-smb2";
 	#address-cells = <1>;
 	#size-cells = <1>;
+	#io-channel-cells = <1>;
 
 	io-channels = <&pmic_rradc 0>;
 	io-channel-names = "rradc_batt_id";

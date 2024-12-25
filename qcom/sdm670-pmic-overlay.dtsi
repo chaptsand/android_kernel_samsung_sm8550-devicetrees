@@ -1,22 +1,44 @@
 #include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/iio/qti_power_supply_iio.h>
 
 &pm660_0 {
 	pm660_charger: qcom,qpnp-smb2 {
-		compatible = "qcom,qpnp-smb2";
+		compatible = "qcom,pm660-smb2";
 		#address-cells = <1>;
 		#size-cells = <1>;
 		#cooling-cells = <2>;
+		#io-channel-cells = <1>;
 
 		qcom,pmic-revid = <&pm660_revid>;
 
 		io-channels = <&pm660_rradc 8>,
 			      <&pm660_rradc 10>,
 			      <&pm660_rradc 3>,
-			      <&pm660_rradc 4>;
+			      <&pm660_rradc 4>,
+			      <&pm660_fg PSY_IIO_DEBUG_BATTERY>,
+			      <&pm660_fg PSY_IIO_VOLTAGE_NOW>,
+			      <&pm660_fg PSY_IIO_CAPACITY>,
+			      <&pm660_fg PSY_IIO_CURRENT_NOW>,
+			      <&pm660_fg PSY_IIO_CHARGE_FULL>,
+			      <&pm660_fg PSY_IIO_CHARGE_COUNTER>,
+			      <&pm660_fg PSY_IIO_CYCLE_COUNT>,
+			      <&pm660_fg PSY_IIO_CHARGE_FULL_DESIGN>,
+			      <&pm660_fg PSY_IIO_TIME_TO_FULL_NOW>,
+			      <&pm660_fg PSY_IIO_TEMP>;
 		io-channel-names = "charger_temp",
 				   "charger_temp_max",
 				   "usbin_i",
-				   "usbin_v";
+				   "usbin_v",
+				   "debug_battery",
+				   "voltage_now",
+				   "capacity",
+				   "current_now",
+				   "charge_full",
+				   "charge_counter",
+				   "cycle_count",
+				   "charge_full_design",
+				   "time_to_full_now",
+				   "temp";
 
 		qcom,wipower-max-uw = <5000000>;
 
@@ -148,22 +170,32 @@
 	};
 
 	pm660_rradc: rradc@4500 {
+		compatible = "qcom,rradc";
 		reg = <0x4500 0x100>;
 		#address-cells = <1>;
 		#size-cells = <0>;
 		#io-channel-cells = <1>;
+
 		qcom,pmic-revid = <&pm660_revid>;
+		io-channels = <&pm660_fg PSY_IIO_FG_RESET_CLOCK>;
+		io-channel-names = "fg_reset_clock";
 	};
 
 	pm660_fg: qpnp,fg {
-		compatible = "qcom,fg-gen3";
+		compatible = "qcom,pm660-fg-gen3";
 		#address-cells = <1>;
 		#size-cells = <1>;
+		#io-channel-cells = <1>;
+
 		qcom,pmic-revid = <&pm660_revid>;
 		io-channels = <&pm660_rradc 0>,
-			      <&pm660_rradc 7>;
+			      <&pm660_rradc 7>,
+			      <&pm660_charger PSY_IIO_CHARGE_QNOVO_ENABLE>,
+			      <&pm660_charger PSY_IIO_CHARGE_DONE>;
 		io-channel-names = "rradc_batt_id",
-				   "rradc_die_temp";
+				   "rradc_die_temp",
+				   "charge_qnovo_enable",
+				   "charge_done";
 		qcom,rradc-base = <0x4500>;
 		qcom,fg-esr-timer-awake = <64 96>;
 		qcom,fg-esr-timer-asleep = <224 256>;
@@ -228,53 +260,105 @@
 
 &pm660_1 {
 	pm660_haptics: qcom,haptics@c000 {
+		compatible = "qcom,pm660-haptics";
 		reg = <0xc000 0x100>;
 		interrupts = <0x1 0xc0 0x0 IRQ_TYPE_EDGE_BOTH>,
 			     <0x1 0xc0 0x1 IRQ_TYPE_EDGE_BOTH>;
 		interrupt-names = "hap-sc-irq", "hap-play-irq";
-		qcom,pmic-revid = <&pm660_revid>;
-		qcom,pmic-misc = <&pm660_misc>;
-		qcom,misc-clk-trim-error-reg = <0xf3>;
-		qcom,actuator-type = <0>;
-		qcom,play-mode = "direct";
+		qcom,actuator-type = "lra";
 		qcom,vmax-mv = <3200>;
-		qcom,ilim-ma = <800>;
-		qcom,sc-dbc-cycles = <8>;
-		qcom,wave-play-rate-us = <6667>;
-		qcom,en-brake;
-		qcom,lra-high-z = "opt0";
-		qcom,lra-auto-res-mode = "qwd";
-		qcom,lra-res-cal-period = <4>;
+		qcom,play-rate-us = <6667>;
+		qcom,lra-resonance-sig-shape = "sine";
+		qcom,lra-auto-resonance-mode = "qwd";
+		qcom,lra-allow-variable-play-rate;
+
+		wf_0 {
+			/* CLICK */
+			qcom,effect-id = <0>;
+			qcom,wf-vmax-mv = <3600>;
+			qcom,wf-pattern = [3e 3e 3e 3e 3e 3e 3e 3e];
+			qcom,wf-play-rate-us = <6667>;
+			qcom,wf-brake-pattern = [00 00 00 00];
+			qcom,wf-repeat-count = <1>;
+			qcom,wf-s-repeat-count = <1>;
+			qcom,lra-auto-resonance-disable;
+		};
+
+		wf_1 {
+			/* DOUBLE CLICK */
+			qcom,effect-id = <1>;
+			qcom,wf-vmax-mv = <3600>;
+			qcom,wf-pattern = [3e 3e 3e 3e 3e 3e 3e 3e];
+			qcom,wf-play-rate-us = <6667>;
+			qcom,wf-brake-pattern = [00 00 00 00];
+			qcom,wf-repeat-count = <1>;
+			qcom,wf-s-repeat-count = <1>;
+			qcom,lra-auto-resonance-disable;
+		};
+
+		wf_2 {
+			/* TICK */
+			qcom,effect-id = <2>;
+			qcom,wf-vmax-mv = <3600>;
+			qcom,wf-pattern = [3e 3e 3e 3e 3e 3e 3e 3e];
+			qcom,wf-play-rate-us = <6667>;
+			qcom,wf-brake-pattern = [00 00 00 00];
+			qcom,wf-repeat-count = <1>;
+			qcom,wf-s-repeat-count = <1>;
+			qcom,lra-auto-resonance-disable;
+		};
+
+		wf_3 {
+			/* THUD */
+			qcom,effect-id = <3>;
+			qcom,wf-vmax-mv = <3600>;
+			qcom,wf-pattern = [3e 3e 3e 3e 3e 3e 3e 3e];
+			qcom,wf-play-rate-us = <6667>;
+			qcom,wf-brake-pattern = [00 00 00 00];
+			qcom,wf-repeat-count = <1>;
+			qcom,wf-s-repeat-count = <1>;
+			qcom,lra-auto-resonance-disable;
+		};
+
+		wf_4 {
+			/* POP */
+			qcom,effect-id = <4>;
+			qcom,wf-vmax-mv = <3600>;
+			qcom,wf-pattern = [3e 3e 3e 3e 3e 3e 3e 3e];
+			qcom,wf-play-rate-us = <6667>;
+			qcom,wf-brake-pattern = [00 00 00 00];
+			qcom,wf-repeat-count = <1>;
+			qcom,wf-s-repeat-count = <1>;
+			qcom,lra-auto-resonance-disable;
+		};
+
+		wf_5 {
+			/* HEAVY CLICK */
+			qcom,effect-id = <5>;
+			qcom,wf-vmax-mv = <3600>;
+			qcom,wf-pattern = [3e 3e 3e 3e 3e 3e 3e 3e];
+			qcom,wf-play-rate-us = <6667>;
+			qcom,wf-brake-pattern = [00 00 00 00];
+			qcom,wf-repeat-count = <1>;
+			qcom,wf-s-repeat-count = <1>;
+			qcom,lra-auto-resonance-disable;
+		};
 	};
 };
 
 &pm660l_3 {
 	pm660l_wled: qcom,leds@d800 {
-		reg = <0xd800 0x100>,
-			<0xd900 0x100>;
-		reg-names = "qpnp-wled-ctrl-base",
-				"qpnp-wled-sink-base";
+		compatible = "qcom,pm660l-wled";
+		reg = <0xd800>, <0xd900>;
+		reg-names = "wled-ctrl-base",
+				"wled-sink-base";
 		interrupts = <0x3 0xd8 0x1 IRQ_TYPE_EDGE_RISING>;
 		interrupt-names = "ovp-irq";
-		linux,name = "wled";
-		linux,default-trigger = "bkl-trigger";
-		qcom,fdbk-output = "auto";
-		qcom,vref-uv = <127500>;
-		qcom,switch-freq-khz = <800>;
-		qcom,ovp-mv = <29600>;
-		qcom,ilim-ma = <970>;
-		qcom,boost-duty-ns = <26>;
-		qcom,mod-freq-khz = <9600>;
-		qcom,dim-mode = "hybrid";
-		qcom,hyb-thres = <625>;
-		qcom,sync-dly-us = <800>;
-		qcom,fs-curr-ua = <25000>;
-		qcom,cons-sync-write-delay-us = <1000>;
-		qcom,led-strings-list = [00 01 02];
-		qcom,loop-auto-gm-en;
+		label = "backlight";
 		qcom,pmic-revid = <&pm660l_revid>;
-		qcom,auto-calibration-enable;
+		qcom,auto-calibration;
 		status = "ok";
+		qcom,enabled-strings = <0 1 2 3>;
 	};
 
 	pm660l_lcdb: qpnp-lcdb@ec00 {
@@ -362,8 +446,43 @@
 	};
 };
 
+&pm660_pdphy {
+	vbus-supply = <&smb2_vbus>;
+	vconn-supply = <&smb2_vconn>;
+
+	#io-channel-cells = <1>;
+	io-channels = <&pm660_charger PSY_IIO_PD_ACTIVE>,
+		      <&pm660_charger PSY_IIO_TYPEC_CC_ORIENTATION>,
+		      <&pm660_charger PSY_IIO_CONNECTOR_TYPE>,
+		      <&pm660_charger PSY_IIO_TYPEC_POWER_ROLE>,
+		      <&pm660_charger PSY_IIO_PD_USB_SUSPEND_SUPPORTED>,
+		      <&pm660_charger PSY_IIO_TYPEC_SRC_RP>,
+		      <&pm660_charger PSY_IIO_PD_IN_HARD_RESET>,
+		      <&pm660_charger PSY_IIO_PD_CURRENT_MAX>,
+		      <&pm660_charger PSY_IIO_PR_SWAP>,
+		      <&pm660_charger PSY_IIO_PD_VOLTAGE_MIN>,
+		      <&pm660_charger PSY_IIO_PD_VOLTAGE_MAX>,
+		      <&pm660_charger PSY_IIO_USB_REAL_TYPE>,
+		      <&pm660_charger PSY_IIO_TYPEC_MODE>,
+		      <&pm660_charger PSY_IIO_PE_START>;
+	io-channel-names = "pd_active",
+			   "typec_cc_orientation",
+			   "connector_type",
+			   "typec_power_role",
+			   "pd_usb_suspend_supported",
+			   "typec_src_rp",
+			   "pd_in_hard_reset",
+			   "pr_current_max",
+			   "pr_swap",
+			   "pd_voltage_min",
+			   "pd_voltage_max",
+			   "real_type",
+			   "typec_mode",
+			   "pe_start";
+};
+
 &usb0 {
-	qcom,no-vbus-vote-with-type-C;
+	extcon = <&pm660_pdphy>, <&pm660_charger>, <&eud>;
 };
 
 &thermal_zones {

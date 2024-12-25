@@ -1,9 +1,12 @@
+#include <dt-bindings/iio/qti_power_supply_iio.h>
+
 &pm660_0 {
 	pm660_charger: qcom,qpnp-smb2 {
-		compatible = "qcom,qpnp-smb2";
+		compatible = "qcom,pm660-smb2";
 		#address-cells = <1>;
 		#size-cells = <1>;
 		#cooling-cells = <2>;
+		#io-channel-cells = <1>;
 
 		qcom,pmic-revid = <&pm660_revid>;
 
@@ -12,11 +15,31 @@
 		io-channels = <&pm660_rradc 8>,
 			      <&pm660_rradc 10>,
 			      <&pm660_rradc 3>,
-			      <&pm660_rradc 4>;
+			      <&pm660_rradc 4>,
+			      <&pm660_fg PSY_IIO_DEBUG_BATTERY>,
+			      <&pm660_fg PSY_IIO_VOLTAGE_NOW>,
+			      <&pm660_fg PSY_IIO_CAPACITY>,
+			      <&pm660_fg PSY_IIO_CURRENT_NOW>,
+			      <&pm660_fg PSY_IIO_CHARGE_FULL>,
+			      <&pm660_fg PSY_IIO_CHARGE_COUNTER>,
+			      <&pm660_fg PSY_IIO_CYCLE_COUNT>,
+			      <&pm660_fg PSY_IIO_CHARGE_FULL_DESIGN>,
+			      <&pm660_fg PSY_IIO_TIME_TO_FULL_NOW>,
+			      <&pm660_fg PSY_IIO_TEMP>;
 		io-channel-names = "charger_temp",
 				   "charger_temp_max",
 				   "usbin_i",
-				   "usbin_v";
+				   "usbin_v",
+				   "debug_battery",
+				   "voltage_now",
+				   "capacity",
+				   "current_now",
+				   "charge_full",
+				   "charge_counter",
+				   "cycle_count",
+				   "charge_full_design",
+				   "time_to_full_now",
+				   "temp";
 
 		qcom,wipower-max-uw = <5000000>;
 
@@ -148,22 +171,30 @@
 	};
 
 	pm660_rradc: rradc@4500 {
+		compatible = "qcom,rradc";
 		reg = <0x4500 0x100>;
 		#address-cells = <1>;
 		#size-cells = <0>;
 		#io-channel-cells = <1>;
+
 		qcom,pmic-revid = <&pm660_revid>;
+		io-channels = <&pm660_fg PSY_IIO_FG_RESET_CLOCK>;
+		io-channel-names = "fg_reset_clock";
 	};
 
 	pm660_fg: qpnp,fg {
-		compatible = "qcom,fg-gen3";
+		compatible = "qcom,pm660-fg-gen3";
 		#address-cells = <1>;
 		#size-cells = <1>;
+		#io-channel-cells = <1>;
+
 		qcom,pmic-revid = <&pm660_revid>;
 		io-channels = <&pm660_rradc 0>,
-			      <&pm660_rradc 7>;
+			      <&pm660_rradc 7>,
+			      <&pm660_charger PSY_IIO_CHARGE_DONE>;
 		io-channel-names = "rradc_batt_id",
-				   "rradc_die_temp";
+				   "rradc_die_temp",
+				   "charge_done";
 		qcom,rradc-base = <0x4500>;
 		qcom,fg-esr-timer-awake = <64 96>;
 		qcom,fg-esr-timer-asleep = <224 256>;

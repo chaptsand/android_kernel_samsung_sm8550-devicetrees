@@ -53,6 +53,11 @@
 			"mhi-virt-device-int-15";
 };
 
+&mhi_net_device {
+	qcom,mhi-num-nw-client-limit = <16>;
+	qcom,mhi-ethernet-interface-ch-list = <50 52 54 56 58 60 62 64 66 68 70 72 74 76>;
+};
+
 &gcc {
 	compatible = "qcom,cinder-gcc-v2", "syscon";
 };

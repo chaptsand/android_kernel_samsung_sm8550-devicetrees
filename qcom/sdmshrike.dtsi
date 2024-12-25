@@ -507,13 +507,6 @@
 			size = <0x0 0xA000000>;
 		};
 
-		dump_mem: mem_dump_region {
-			compatible = "shared-dma-pool";
-			alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
-			reusable;
-			size = <0 0x2400000>;
-		};
-
 		uefi_log: uefi_log@8bc00000 {
 			reg = <0x0 0x8bc00000 0x0 0x10000>;
 			label = "uefi_log";
@@ -1744,7 +1737,7 @@
 		qcom,bus-vector-names = "MIN",
 				"MAX";
 		qcom,instance-type = "ufs";
-		qcom,num-fde-slots = <31>;
+		qcom,num-fde-slots = <10>;
 	};
 
 	ufsphy_mem: ufsphy_mem@1d87000 {

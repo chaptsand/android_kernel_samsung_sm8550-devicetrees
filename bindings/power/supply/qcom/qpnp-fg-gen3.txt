@@ -21,13 +21,23 @@ First Level Node - FG Gen3 device
 - compatible
 	Usage:      required
 	Value type: <string>
-	Definition: Should be "qcom,fg-gen3".
+	Definition: Should be "qcom,pm660-fg-gen3" for PM660.
+		    Should be "qcom,pmi8998-fg-gen3" for PMI8998.
 
 - qcom,pmic-revid
 	Usage:      required
 	Value type: <phandle>
 	Definition: Should specify the phandle of PMIC revid module. This is
 		    used to identify the PMIC subtype.
+
+- #io-channel-cells:
+	Usage: required
+	Value type: <u32>
+	Definition: Number of cells in an IIO specifier.
+		Needed to indicate other clients can query this device for
+		IIO channels.
+		For details about IIO bindings see:
+		Documentation/devicetree/bindings/iio/iio-bindings.txt
 
 - io-channels
 - io-channel-names
@@ -512,10 +522,11 @@ Example
 ========
 
 pmi8998_fg: qpnp,fg {
-	compatible = "qcom,fg-gen3";
+	compatible = "qcom,pmi8998-fg-gen3";
 	#address-cells = <1>;
 	#size-cells = <1>;
 	qcom,pmic-revid = <&pmi8998_revid>;
+	#io-channel-cells = <1>;
 	io-channels = <&pmi8998_rradc 3>;
 	io-channel-names = "rradc_batt_id";
 	qcom,rradc-base = <0x4500>;

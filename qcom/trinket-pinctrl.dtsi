@@ -1541,5 +1541,28 @@
 			};
 		};
 
+		tps_i2c_intr: tps_i2c_intr {
+			mux {
+				pins = "gpio9";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio9";
+				drive-strength = <2>;
+				bias-pull-up;
+				input-enable;
+			};
+		};
+
+		usb2_det_default: usb2_det_default {
+			config {
+				pins = "gpio25";
+				drive-strength = <2>;
+				bias-pull-down;
+				input-enable;
+			};
+		};
+
 	};
 };

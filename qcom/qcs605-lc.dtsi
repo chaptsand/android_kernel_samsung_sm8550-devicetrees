@@ -9,7 +9,9 @@
 	chosen {
 		bootargs = "core_ctl_disable_cpumask=0-3";
 	};
+};
 
+&soc {
 	cpus {
 		/delete-node/ cpu@200;
 		/delete-node/ cpu@300;
@@ -25,9 +27,7 @@
 			};
 		};
 	};
-};
 
-&soc {
 	/delete-node/ jtagmm@7240000;
 	/delete-node/ jtagmm@7340000;
 	/delete-node/ jtagmm@7440000;
@@ -36,10 +36,11 @@
 	/delete-node/ cti@7320000;
 	/delete-node/ cti@7420000;
 	/delete-node/ cti@7520000;
-	/delete-node/ etm@7240000;
-	/delete-node/ etm@7340000;
-	/delete-node/ etm@7440000;
-	/delete-node/ etm@7540000;
+	/delete-node/ etm2;
+	/delete-node/ etm3;
+	/delete-node/ etm4;
+	/delete-node/ etm5;
+
 	cpuss_dump {
 		/delete-node/ qcom,l1_i_cache200;
 		/delete-node/ qcom,l1_i_cache300;
@@ -130,13 +131,6 @@
 		/delete-property/ cx-supply;
 		cx-supply = <&pm8005_s1_level>;
 	};
-};
-
-&clock_cpucc {
-	/delete-property/ vdd_l3_mx_ao-supply;
-	/delete-property/ vdd_pwrcl_mx_ao-supply;
-	vdd_l3_mx_ao-supply = <&pm660_s2_level_ao>;
-	vdd_pwrcl_mx_ao-supply = <&pm660_s2_level_ao>;
 };
 
 &gcc {

@@ -15,6 +15,8 @@ Optional properties:
  - qcom,retain-regs: Presence denotes a hardware requirement to enable the
 		     usage of retention registers which maintain their state
 		     after the GDSC is disabled and re-enabled.
+ - qcom,clear-retain-regs: Presence denotes a hardware requirement to clear
+		     the usage of retention registers before disabling the GDSC.
  - qcom,skip-logic-collapse: Presence denotes a requirement to leave power to
                              the core's logic enabled.
  - qcom,support-hw-trigger: Presence denotes a hardware feature to switch
@@ -85,6 +87,13 @@ Optional properties:
 			Some targets have single votable register to control GDSC,
 			but there could be targets where separate votable registers
 			to control the GDSCs individually for active and sleep states.
+ - qcom,clk-ctrl: If present, few clocks will be enabled/disabled before the GDSC
+			enable/disable. This property can contain a 2D array of 4
+			arguments in each row, each row represents one of the clocks.First
+			element in row would be a phandle to the clock controller node
+			that contains the clk to be controlled, second would be offset
+			address of the clk, third would be bit number to control the
+			clk, fourth would be to convey if clk enable is inverted or not.
 
 Example:
 	gdsc_oxili_gx: qcom,gdsc@fd8c4024 {
@@ -109,4 +118,21 @@ Example:
 		compatible = "qcom,gdsc";
 		regulator-name = "gcc_pcie_1_gdsc";
 		qcom,collapse-vote = <&active_ctrl &sleep_ctrl 1>;
+	};
+
+	/* GDSC clock control */
+	gpu_cc_cx_gdsc: qcom,gdsc@3d99108 {
+		compatible = "qcom,gdsc";
+		reg = <0x3d99108 0x4>;
+		regulator-name = "gpu_cc_cx_gdsc";
+		qcom,clk-ctrl = <&gpucc 0x9130 22 1>;
+	};
+
+	/* GDSC multiple clocks control */
+	gpu_cc_cx_gdsc: qcom,gdsc@3d99108 {
+		compatible = "qcom,gdsc";
+		reg = <0x3d99108 0x4>;
+		regulator-name = "gpu_cc_cx_gdsc";
+		qcom,clk-ctrl = <&gpucc 0x9130 22 1>,
+				<&gcc 0x81018 0 0>;
 	};

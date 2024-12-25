@@ -75,6 +75,20 @@
 			bias-pull-up;
 		};
 	};
+
+	pcie0_usbhub_reset_default: pcie0_usbhub_reset_default {
+		mux {
+			pins = "gpio41";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio41";
+			drive-strength = <2>;
+			output-high;
+			bias-pull-down;
+		};
+	};
 };
 
 &soc {
@@ -121,9 +135,9 @@
 		regulator-enable-ramp-delay = <2000>;
 	};
 
-	pcie_usb_hub_1p05_vreg: pcie_usb_hub_1p05_vreg {
+	pcie_upd_1p05_vreg: pcie_upd_1p05_vreg {
 		compatible = "regulator-fixed";
-		regulator-name = "pcie_usb_hub_1p05_vreg";
+		regulator-name = "pcie_upd_1p05_vreg";
 		pinctrl-names = "default";
 		pinctrl-0 = <&pice0_usb_power_1p05_default>;
 		gpio = <&tlmm 179 GPIO_ACTIVE_HIGH>;
@@ -131,33 +145,45 @@
 		regulator-min-microvolt = <1000000>;
 		regulator-max-microvolt = <1000000>;
 		enable-active-high;
+		regulator-always-on;
 		regulator-enable-ramp-delay = <5000>;
 	};
 
-	pcie_usb_hub_3p3_vreg: pcie_usb_hub_3p3_vreg {
+	pcie_upd_3p3_vreg: pcie_upd_3p3_vreg {
 		compatible = "regulator-fixed";
-		regulator-name = "pcie_usb_hub_3p3_vreg";
+		regulator-name = "pcie_upd_3p3_vreg";
 		pinctrl-names = "default";
 		pinctrl-0 = <&pice0_usb_power_3p3_default>;
 		gpio = <&tlmm 13 GPIO_ACTIVE_HIGH>;
-		vin-supply = <&pcie_usb_hub_1p05_vreg>;
+		vin-supply = <&pcie_upd_1p05_vreg>;
 		regulator-min-microvolt = <3300000>;
 		regulator-max-microvolt = <3300000>;
 		enable-active-high;
+		regulator-always-on;
 		regulator-enable-ramp-delay = <10000>;
 	};
 
-	usb_hub_rest_vreg: usb_hub_rest_vreg {
+	upd_rest_vreg: upd_rest_vreg {
 		compatible = "regulator-fixed";
-		regulator-name = "usb_hub_rest_vreg";
+		regulator-name = "upd_rest_vreg";
 		pinctrl-names = "default";
 		pinctrl-0 = <&pice0_usb_ponrst_default>;
 		gpio = <&tlmm 182 GPIO_ACTIVE_HIGH>;
-		vin-supply = <&pcie_usb_hub_3p3_vreg>;
+		vin-supply = <&pcie_upd_3p3_vreg>;
 		regulator-min-microvolt = <3300000>;
 		regulator-max-microvolt = <3300000>;
 		enable-active-high;
+		regulator-always-on;
 		regulator-enable-ramp-delay = <10000>;
+	};
+
+	usbhub_rest_vreg: usbhub_rest_vreg {
+		compatible = "regulator-fixed";
+		regulator-name = "usbhub_rest_vreg";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pcie0_usbhub_reset_default>;
+		gpio = <&tlmm 41 GPIO_ACTIVE_LOW>;
+		enable-active-high;
 	};
 
 	gpio_key {
@@ -370,6 +396,9 @@
 	qcom,vccq-parent-supply = <&pm_v6g_s4>;
 	qcom,vccq-parent-max-microamp = <210000>;
 
+	qcom,vccq-shutdown-supply = <&pm_v6g_l1>;
+	qcom,vccq-shutdown-max-microamp = <1200000>;
+
 	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
 	resets = <&gcc GCC_UFS_PHY_BCR>;
 	reset-names = "rst";
@@ -509,9 +538,10 @@
 
 &qupv3_se4_4uart {
 	status = "ok";
+	qcom,auto-suspend-disable;
 	qrc:qrc@100 {
 		compatible = "qcom,qrc-uart";
-		status = "ok";
+		status = "disabled";
 		qcom,qrc-reset-gpio = <&tlmm 168 0>;
 	};
 };
@@ -540,7 +570,6 @@
 		pinctrl-0 = <&usb3phy_portselect_gpio>;
 		gpios = <&tlmm 11 0>;
 		set-aux;
-		aux-orientation-violate-usb;
 
 		eq = /bits/ 8 <
 				/* Parameters for USB */
@@ -736,9 +765,8 @@
 
 &pcie0 {
 	qcom,boot-option = <0x2>;
-
 	pcie-i2c-phandle = <&qupv3_hub_i2c4>;
-	vreg-3p3-supply = <&usb_hub_rest_vreg>;
+	vreg-3p3-supply = <&qps615_resx0_0p9_vreg>;
 	msi-parent = <&pcie0_msi>;
 
 	 qcom,pcie-phy-ver = <102>;
@@ -952,9 +980,9 @@
 
 &pcie1 {
 	pcie-i2c-phandle = <&qupv3_hub_i2c3>;
+	qcom,filtered-bdfs = <0x05010000>;
 	qcom,boot-option = <0x1>;
 	vreg-3p3-supply = <&qps615_resx1_0p9_vreg>;
-	qcom,apss-based-l1ss-sleep;
 	msi-parent = <&pcie1_msi>;
 	qcom,phy-sequence = <0x1240 0x03 0x0
 			0x0030 0x1d 0x0

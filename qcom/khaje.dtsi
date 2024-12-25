@@ -2131,6 +2131,7 @@
 	rpm-sleep-stats@4690000 {
 		compatible = "qcom,rpm-sleep-stats";
 		reg = <0x04690000 0x400>;
+		ss-name = "apss", "modem", "adsp", "cdsp";
 	};
 
 	qcom,rpm-master-stats@45f0150 {

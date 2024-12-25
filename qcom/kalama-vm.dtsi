@@ -373,7 +373,7 @@
 		interrupt-controller;
 		#interrupt-cells = <2>;
 		/* Valid pins */
-		gpios = /bits/ 16 <86 87 133 137 44 45 46 47 24 25 91 56 57 58 59 13 48>;
+		gpios = /bits/ 16 <86 87 133 125 137 44 45 46 47 24 25 19 91 56 57 58 59 13 48 42 2 3 118 119 55 14>;
 
 	};
 
@@ -382,9 +382,10 @@
 		pinctrl-names = "active", "sleep";
 		pinctrl-0 = <&qupv3_se1_7i2c_active>;
 		pinctrl-1 = <&qupv3_se1_7i2c_sleep>;
-		tlmm-vm-gpio-list = <&tlmm 86 0 &tlmm 87 0 &tlmm 133 0 &tlmm 137 0 &tlmm 44 0 &tlmm 45 0
-					&tlmm 46 0 &tlmm 47 0 &tlmm 24 0 &tlmm 25 0 &tlmm 91 0
-					 &tlmm 56 0 &tlmm 57 0 &tlmm 58 0 &tlmm 59 0 &tlmm 13 0 &tlmm 48 0>;
+		tlmm-vm-gpio-list = <&tlmm 86 0 &tlmm 87 0 &tlmm 133 0 &tlmm 125 0 &tlmm 137 0 &tlmm 44 0 &tlmm 45 0
+					&tlmm 46 0 &tlmm 47 0 &tlmm 24 0 &tlmm 25 0 &tlmm 19 0 &tlmm 91 0
+					&tlmm 56 0 &tlmm 57 0 &tlmm 58 0 &tlmm 59 0 &tlmm 13 0 &tlmm 48 0 &tlmm 42 0
+					&tlmm 2 0 &tlmm 3 0 &tlmm 118 0 &tlmm 119 0 &tlmm 55 0 &tlmm 14 0>;
 	};
 
 	pinctrl@f000000 {
@@ -426,9 +427,10 @@
 
 	tlmm-vm-mem-access {
 		compatible = "qcom,tlmm-vm-mem-access";
-		tlmm-vm-gpio-list = <&tlmm 86 0 &tlmm 87 0 &tlmm 133 0 &tlmm 137 0 &tlmm 44 0 &tlmm 45 0
-					&tlmm 46 0 &tlmm 47 0 &tlmm 24 0 &tlmm 25 0 &tlmm 91 0
-					 &tlmm 56 0 &tlmm 57 0 &tlmm 58 0 &tlmm 59 0 &tlmm 13 0 &tlmm 48 0>;
+		tlmm-vm-gpio-list = <&tlmm 86 0 &tlmm 87 0 &tlmm 133 0 &tlmm 125 0 &tlmm 137 0 &tlmm 44 0 &tlmm 45 0
+					&tlmm 46 0 &tlmm 47 0 &tlmm 24 0 &tlmm 25 0 &tlmm 19 0 &tlmm 91 0
+					&tlmm 56 0 &tlmm 57 0 &tlmm 58 0 &tlmm 59 0 &tlmm 13 0 &tlmm 48 0 &tlmm 42 0
+					&tlmm 2 0 &tlmm 3 0 &tlmm 118 0 &tlmm 119 0 &tlmm 55 0 &tlmm 14 0>;
 	};
 
 	vgic: interrupt-controller@17100000 {
@@ -585,7 +587,6 @@
 			qcom,le-vm;
 			status = "disabled";
 		};
-
 		qupv3_se8_spi: spi@880000 {
 			compatible = "qcom,spi-geni";
 			reg = <0x880000 0x4000>;
@@ -594,6 +595,29 @@
 			#size-cells = <0>;
 			dmas = <&gpi_dma2 0 0 1 64 0>,
 				<&gpi_dma2 1 0 1 64 0>;
+			dma-names = "tx", "rx";
+			spi-max-frequency = <50000000>;
+			qcom,le-vm;
+			status = "disabled";
+		};
+		qupv3_se12_i2c: i2c@890000 {
+			compatible = "qcom,i2c-geni";
+			reg = <0x890000 0x4000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			dmas = <&gpi_dma2 0 4 3 64 0>,
+				<&gpi_dma2 1 4 3 64 0>;
+			dma-names = "tx", "rx";
+			qcom,le-vm;
+			status = "disabled";
+		};
+		qupv3_se12_spi: spi@890000 {
+			compatible = "qcom,spi-geni";
+			reg = <0x890000 0x4000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			dmas = <&gpi_dma2 0 4 1 64 0>,
+			<&gpi_dma2 1 4 1 64 0>;
 			dma-names = "tx", "rx";
 			spi-max-frequency = <50000000>;
 			qcom,le-vm;

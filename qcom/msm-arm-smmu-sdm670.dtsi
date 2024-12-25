@@ -2,7 +2,7 @@
 &soc {
 	kgsl_smmu: arm,smmu-kgsl@5040000 {
 		status = "ok";
-		compatible = "qcom,smmu-v2";
+		compatible = "qcom,smmu-v2", "qcom,adreno-smmu";
 		reg = <0x5040000 0x10000>;
 		#iommu-cells = <1>;
 		qcom,dynamic;
@@ -45,7 +45,7 @@
 		reg-names = "base", "tcu-base";
 		#iommu-cells = <2>;
 		qcom,use-3-lvl-tables;
-		qcom,handoff-smrs = <0x0880 0x408>;
+		qcom,handoff-smrs = <0x0880 0x8>,<0x0c80 0x8>;
 		qcom,no-asid-retention;
 		qcom,disable-atos;
 		#global-interrupts = <1>;

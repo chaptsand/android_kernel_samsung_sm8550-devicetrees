@@ -330,6 +330,20 @@
 		};
 	};
 
+	rpmh-regulator-ldob4 {
+		compatible = "qcom,rpmh-vrm-regulator";
+		qcom,resource-name = "ldob4";
+		qcom,regulator-type = "pmic5-ldo";
+
+		L04B: pm_humu_l4: regulator-pm-humu-l4 {
+			regulator-name = "pm_humu_l4";
+			qcom,set = <RPMH_REGULATOR_SET_ALL>;
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			qcom,init-voltage = <1800000>;
+		};
+	};
+
 	rpmh-regulator-ldob5 {
 		compatible = "qcom,rpmh-vrm-regulator";
 		qcom,resource-name = "ldob5";
@@ -456,7 +470,6 @@
 			regulator-max-microvolt = <1504000>;
 			qcom,init-voltage = <1200000>;
 			qcom,init-mode = <RPMH_REGULATOR_MODE_HPM>;
-			qcom,proxy-consumer-enable;
 		};
 	};
 
@@ -477,7 +490,6 @@
 			regulator-max-microvolt = <1800000>;
 			qcom,init-voltage = <1800000>;
 			qcom,init-mode = <RPMH_REGULATOR_MODE_HPM>;
-			qcom,proxy-consumer-enable;
 		};
 	};
 
@@ -498,7 +510,6 @@
 			regulator-max-microvolt = <3000000>;
 			qcom,init-voltage = <3000000>;
 			qcom,init-mode = <RPMH_REGULATOR_MODE_HPM>;
-			qcom,proxy-consumer-enable;
 		};
 	};
 
@@ -704,7 +715,6 @@
 			regulator-max-microvolt = <912000>;
 			qcom,init-voltage = <880000>;
 			qcom,init-mode = <RPMH_REGULATOR_MODE_HPM>;
-			qcom,proxy-consumer-enable;
 		};
 
 		L1E_AO: pm_v6e_l1_ao: regulator-pm-v6e-l1-ao {
@@ -763,7 +773,6 @@
 			regulator-max-microvolt = <1200000>;
 			qcom,init-voltage = <1200000>;
 			qcom,init-mode = <RPMH_REGULATOR_MODE_HPM>;
-			qcom,proxy-consumer-enable;
 		};
 
 		L3E_AO: pm_v6e_l3_ao: regulator-pm-v6e-l3-ao {

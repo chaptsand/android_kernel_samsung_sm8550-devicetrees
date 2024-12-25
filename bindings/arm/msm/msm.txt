@@ -62,6 +62,9 @@ SoCs:
 - BENGAL
   compatible = "qcom,bengal"
 
+- BENGALP
+  compatible = "qcom,bengalp"
+
 - KHAJE
   compatible = "qcom,khaje"
 
@@ -73,6 +76,15 @@ SoCs:
 
 - KHAJEG
   compatible = "qcom,khajeg"
+
+- SCUBA
+  compatible = "qcom,scuba"
+
+- SCUBAIOT
+  compatible = "qcom,scuba-iot"
+
+- SCUBAPIOT
+  compatible = "qcom,scubap-iot"
 
 - SDMSHRIKE
   compatible = "qcom,sdmshrike"
@@ -289,6 +301,9 @@ compatible = "qcom,lito-cdp"
 compatible = "qcom,lito-atp"
 compatible = "qcom,lito-qrd"
 compatible = "qcom,bengal-rumi"
+compatible = "qcom,bengal-idp"
+compatible = "qcom,bengal-qrd"
+compatible = "qcom,bengalp-idp"
 compatible = "qcom,sdmshrike-rumi"
 compatible = "qcom,sdmshrike-mtp"
 compatible = "qcom,sdmshrike-cdp"
@@ -365,6 +380,9 @@ compatible = "qcom,khajeq-atp"
 compatible = "qcom,khajeg-idp"
 compatible = "qcom,khajeg-qrd"
 compatible = "qcom,khajeg-atp"
+compatible = "qcom,scuba-rumi"
+compatible = "qcom,scuba-idp"
+compatible = "qcom,scuba-qrd"
 compatible = "qcom,sdxpinn-rumi"
 compatible = "qcom,sdxpinn-idp"
 compatible = "qcom,sa410m-rumi"
@@ -393,5 +411,6 @@ compatible = "qcom,trinket-iot"
 compatible = "qcom,trinketp-iot"
 compatible = "qcom,trinket-iot-idp"
 compatible = "qcom,trinketp-iot-idp"
+compatible = "qcom,trinket-idp"
 compatible = "qcom,qcs605-mtp"
 compatible = "qcom,qcs605-cdp"

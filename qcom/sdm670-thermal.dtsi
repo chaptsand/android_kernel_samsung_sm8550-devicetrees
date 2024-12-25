@@ -1,6 +1,6 @@
 #include <dt-bindings/thermal/thermal.h>
 
-&clock_cpucc {
+&soc {
 	lmh_dcvs0: qcom,limits-dcvs@0 {
 		compatible = "qcom,msm-hw-limits";
 		interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
@@ -14,9 +14,7 @@
 		qcom,affinity = <1>;
 		#thermal-sensor-cells = <0>;
 	};
-};
 
-&soc {
 	qmi-tmd-devices {
 
 		modem {

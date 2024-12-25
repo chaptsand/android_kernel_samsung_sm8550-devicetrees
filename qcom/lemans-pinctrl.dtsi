@@ -860,14 +860,27 @@
 	};
 
 	qupv3_se13_i2c_pins: qupv3_se13_i2c_pins {
-		qupv3_se13_i2c_active: qupv3_se13_i2c_active {
+		qupv3_se13_i2c_sda_active: qupv3_se13_i2c_sda_active {
 			mux {
-				pins = "gpio56", "gpio57";
-				function = "qup1_se6";
+				pins = "gpio56";
+				function = "qup1_se6_l0";
 			};
 
 			config {
-				pins = "gpio56", "gpio57";
+				pins = "gpio56";
+				drive-strength = <2>;
+				bias-pull-up;
+			};
+		};
+
+		qupv3_se13_i2c_scl_active: qupv3_se13_i2c_scl_active {
+			mux {
+				pins = "gpio57";
+				function = "qup1_se6_l1";
+			};
+
+			config {
+				pins = "gpio57";
 				drive-strength = <2>;
 				bias-pull-up;
 			};

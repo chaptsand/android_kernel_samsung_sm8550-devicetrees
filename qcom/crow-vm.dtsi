@@ -5,7 +5,7 @@
 / {
 	#address-cells = <0x2>;
 	#size-cells = <0x2>;
-	qcom,msm-id = <608 0x10000>;
+	qcom,msm-id = <608 0x10000>, <644 0x10000>;
 	interrupt-parent = <&vgic>;
 
 	logbuf: qcom,logbuf-vendor-hooks {

@@ -49,6 +49,7 @@
 			snps,hird-threshold = /bits/ 8 <0x0>;
 			snps,is-utmi-l1-suspend;
 			snps,usb2-gadget-lpm-disable;
+			snps,dis_u2_susphy_quirk;
 			tx-fifo-resize;
 			maximum-speed = "high-speed";
 			dr_mode = "otg";
@@ -119,7 +120,7 @@
 
 		qcom,core-clk-rate = <200000000>;
 		qcom,core-clk-rate-hs = <66666667>;
-
+		qcom,disable-host-ssphy-powerdown;
 		status = "disabled";
 
 		dwc3@a800000 {

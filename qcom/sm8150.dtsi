@@ -496,10 +496,8 @@
 
 		mdsp_mem: mdsp_region {
 			compatible = "shared-dma-pool";
-			alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
+			reg = <0x0 0xec000000 0x0 0x1000000>;
 			reusable;
-			alignment = <0x0 0x400000>;
-			size = <0x0 0x1000000>;
 		};
 
 		user_contig_mem: user_contig_region {
@@ -1144,7 +1142,7 @@
 		qcom,bus-vector-names = "MIN",
 			"MAX";
 		qcom,instance-type = "ufs";
-		qcom,num-fde-slots = <31>;
+		qcom,num-fde-slots = <10>;
 	};
 
 	ufsphy_mem: ufsphy_mem@1d87000 {

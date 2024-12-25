@@ -18,3 +18,7 @@
 	/delete-property/ qcom,drv-name;
 	/delete-property/ msi-map;
 };
+
+&pcie1_rp {
+	/delete-node/ mhi_0;
+};

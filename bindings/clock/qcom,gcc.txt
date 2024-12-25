@@ -53,6 +53,7 @@ Required properties :
 			"qcom,monaco_auto-gcc"
 			"qcom,trinket-gcc"
 			"qcom,sdm670-gcc"
+			"qcom,gcc-sm6115"
 
 - reg : shall contain base register location and length
 - vdd_cx-supply: The vdd_cx logic rail supply.

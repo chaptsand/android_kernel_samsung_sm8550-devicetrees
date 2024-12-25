@@ -9,3 +9,15 @@
 	compatible = "qcom,cinder-idp", "qcom,cinder", "qcom,idp";
 	qcom,board-id = <0x22 0x400>;
 };
+
+&pm8150_vadc {
+	/delete-node/ xo_therm;
+};
+
+&thermal_zones {
+	/delete-node/ sys-therm-0;
+};
+
+&pm8150_adc_tm {
+	/delete-node/ xo_therm;
+};

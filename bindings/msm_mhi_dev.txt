@@ -45,8 +45,8 @@ Required properties:
   - compatible: should be "qcom,msm-mhi-dev-net" for MHI net device driver.
 
 Optional property:
-  - qcom,mhi-ethernet-interface;: If property is present use ethernet packet
-	parsing support.
+  - qcom,mhi-ethernet-interface-ch-list: Channels list which expects Ethernet
+	packet parsing support.
   - qcom,tx_rx_reqs: If property present it will override the number of elements
 	in rx and tx queues for mhi_dev_net device.(Default:128)
 

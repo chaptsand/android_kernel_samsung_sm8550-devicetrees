@@ -1527,7 +1527,8 @@
 
 	mhi_net_device: qcom,mhi_net_dev {
 		compatible = "qcom,msm-mhi-dev-net";
-		qcom,mhi-ethernet-interface-channel = <50>;
+		qcom,mhi-num-nw-client-limit = <5>;
+		qcom,mhi-ethernet-interface-ch-list = <50 52 54>;
 		status = "ok";
 	};
 

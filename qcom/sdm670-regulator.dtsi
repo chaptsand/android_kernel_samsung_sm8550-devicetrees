@@ -430,6 +430,12 @@
 		};
 	};
 
+	rpmh-regulator-ldoa18 {
+		status = "disabled";
+		pm660_l18: regulator-pm660-l18 {
+		};
+	};
+
 	rpmh-regulator-ldoa19 {
 		compatible = "qcom,rpmh-vrm-regulator";
 		qcom,resource-name = "ldoa19";
@@ -633,7 +639,9 @@
 			qcom,init-voltage = <3312000>;
 		};
 	};
+};
 
+&soc {
 	refgen: refgen-regulator@ff1000 {
 		compatible = "qcom,refgen-regulator";
 		reg = <0xff1000 0x60>;

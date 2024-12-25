@@ -61,8 +61,18 @@
 			qcom,intents = <0x0C 1>;
 		};
 
+		qcom,glink-slate-touch {
+			qcom,glink-channels = "touch-ctrl";
+			qcom,intents = <0x0C 1>;
+		};
+
 		qcom,glink-slate-dfu {
 			qcom,glink-channels = "slate-dfu";
+			qcom,intents = <0x24 1>;
+		};
+
+		qcom,glink-slate-custom-data {
+			qcom,glink-channels = "slate_custom_data";
 			qcom,intents = <0x24 1>;
 		};
 
@@ -232,9 +242,9 @@
 		compatible = "qcom,slate-rsb";
 	};
 
-	qcom,slatersb-rpmsg {
-		compatible = "qcom,slatersb-rpmsg";
-		qcom,glink-channels = "slate-rsb-ctl";
+	qcom,slatetouch-rpmsg {
+		compatible = "qcom,slatetouch-rpmsg";
+		qcom,glink-channels = "touch-ctrl";
 		qcom,glinkpkt-edge = "slate";
 		intents = <0x200 1>;
 	};

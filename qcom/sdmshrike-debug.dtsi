@@ -9,7 +9,7 @@
 		compatible = "shared-dma-pool";
 		alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
 		reusable;
-		size = <0 0x2400000>;
+		size = <0 0x2800000>;
 	};
 };
 
@@ -295,6 +295,46 @@
 		l2_tlb700 {
 			qcom,dump-size = <0x7900>;
 			qcom,dump-id = <0x127>;
+		};
+
+		context_cpu0 {
+			qcom,dump-size = <0x10100>;
+			qcom,dump-id = <0x130>;
+		};
+
+		context_cpu1 {
+			qcom,dump-size = <0x10100>;
+			qcom,dump-id = <0x131>;
+		};
+
+		context_cpu2 {
+			qcom,dump-size = <0x10100>;
+			qcom,dump-id = <0x132>;
+		};
+
+		context_cpu3 {
+			qcom,dump-size = <0x10100>;
+			qcom,dump-id = <0x133>;
+		};
+
+		context_cpu4 {
+			qcom,dump-size = <0x18100>;
+			qcom,dump-id = <0x134>;
+		};
+
+		context_cpu5 {
+			qcom,dump-size = <0x18100>;
+			qcom,dump-id = <0x135>;
+		};
+
+		context_cpu6 {
+			qcom,dump-size = <0x18100>;
+			qcom,dump-id = <0x136>;
+		};
+
+		context_cpu7 {
+			qcom,dump-size = <0x18100>;
+			qcom,dump-id = <0x137>;
 		};
 	};
 };

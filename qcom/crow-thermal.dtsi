@@ -259,8 +259,6 @@
 	};
 };
 
-#include "crow-thermal-modem.dtsi"
-
 &thermal_zones {
 	aoss-0 {
 		polling-delay-passive = <0>;
@@ -1199,3 +1197,5 @@
 		};
 	};
 };
+
+#include "crow-thermal-modem.dtsi"

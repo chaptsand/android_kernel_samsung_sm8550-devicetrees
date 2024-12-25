@@ -60,7 +60,14 @@ KALAMA_BOARDS += \
 		 kalamap-hdk-overlay.dtbo \
 		 kalamap-sg-hhg-overlay.dtbo \
 		 kalamap-rb5-gen2-overlay.dtbo \
-		 kalamap-aim300-overlay.dtbo
+		 kalamap-rb5-gen2-dvt-overlay.dtbo \
+		 kalamap-rb5-gen2-dvt-roboticspvm-overlay.dtbo \
+		 kalamap-aim300-overlay.dtbo \
+		 kalamap-aim300-v2-overlay.dtbo \
+		 kalamap-aim300-rdk-overlay.dtbo \
+		 kalamap-hdk-rb5-gen2-single-wingmate-overlay.dtbo \
+		 kalamap-hdk-rb5-gen2-dual-wingmate-overlay.dtbo \
+		 kalamap-hdk-rb5-gen2-vc-overlay.dtbo
 
 NOAPQ_KALAMA_BOARDS += \
 		 kalama-rumi-overlay.dtbo \
@@ -141,6 +148,41 @@ KHAJE_BOARDS += \
 bengal-dtb-$(CONFIG_ARCH_KHAJE) += \
         $(call add-overlays, $(KHAJE_BOARDS) ,$(KHAJE_BASE_DTB))
 bengal-overlays-dtb-$(CONFIG_ARCH_KHAJE) += $(KHAJE_BOARDS) $(KHAJE_BASE_DTB)
+dtb-y += $(bengal-dtb-y)
+
+BENGAL_BASE_DTB += bengal.dtb bengalp.dtb bengal-1gb.dtb bengal-2gb.dtb
+
+BENGAL_BOARDS += \
+		bengal-rumi-overlay.dtbo \
+		bengal-qrd-overlay.dtbo \
+		bengal-idp-overlay.dtbo \
+                bengal-idp-nopmi-overlay.dtbo \
+                bengal-idp-usbc-overlay.dtbo \
+	        bengalp-idp-overlay.dtbo \
+	        bengal-idp-1gb-overlay.dtbo \
+	        bengal-idp-2gb-overlay.dtbo \
+	        bengal-idp-usbc-1gb-overlay.dtbo \
+	        bengal-idp-usbc-2gb-overlay.dtbo
+
+bengal-dtb-$(CONFIG_ARCH_BENGAL) += \
+	$(call add-overlays, $(BENGAL_BOARDS), $(BENGAL_BASE_DTB))
+
+bengal-overlays-dtb-$(CONFIG_ARCH_BENGAL) += $(BENGAL_BOARDS) $(BENGAL_BASE_DTB)
+dtb-y += $(bengal-dtb-y)
+
+SCUBA_BASE_DTB +=  scuba-iot.dtb scuba-iot-2gb.dtb scubap-iot.dtb scubap-iot-idp.dtb scubap-iot-idp-2gb.dtb
+
+SCUBA_BOARDS += \
+		 scuba-iot-idp-overlay.dtbo \
+		 scuba-iot-idp-usbc-overlay.dtbo \
+		 scuba-iot-qrd-eldo-overlay.dtbo \
+		 scuba-iot-qrd-non-eldo-overlay.dtbo \
+		 scuba-iot-rb1-overlay.dtbo
+
+bengal-dtb-$(CONFIG_ARCH_SCUBA) += \
+	$(call add-overlays, $(SCUBA_BOARDS), $(SCUBA_BASE_DTB))
+
+bengal-overlays-dtb-$(CONFIG_ARCH_SCUBA) += $(SCUBA_BOARDS) $(SCUBA_BASE_DTB)
 dtb-y += $(bengal-dtb-y)
 
 KONA_BASE_DTB += kona-iot.dtb kona-iot-v2.dtb kona-iot-v2.1.dtb kona-7230-iot-v2.1.dtb
@@ -228,7 +270,7 @@ qcs405-dtb-$(CONFIG_ARCH_QCS405) += \
 qcs405-overlays-dtb-$(CONFIG_ARCH_QCS405) += $(QCS405_BOARDS) $(QCS405_BASE_DTB)
 dtb-y += $(qcs405-dtb-y)
 
-TRINKET_BASE_DTB += trinket-iot.dtb trinketp-iot.dtb
+TRINKET_BASE_DTB += trinket-iot.dtb trinketp-iot.dtb trinket.dtb
 
 TRINKET_BOARDS += \
 	trinket-iot-idp-overlay.dtbo \
@@ -240,7 +282,15 @@ TRINKET_BOARDS += \
 	trinketp-iot-dp-idp-overlay.dtbo \
 	trinketp-iot-external-codec-idp-overlay.dtbo \
 	trinketp-iot-usbc-external-codec-idp-overlay.dtbo \
-	trinketp-iot-usbc-idp-overlay.dtbo
+	trinketp-iot-usbc-idp-overlay.dtbo \
+	trinket-dp-idp-overlay.dtbo \
+	trinket-idp-overlay.dtbo \
+	trinket-external-codec-idp-overlay.dtbo \
+	trinket-usbc-external-codec-idp-overlay.dtbo \
+	trinket-usbc-idp-overlay.dtbo \
+	trinket-dp-usbc-idp-overlay.dtbo \
+	trinket-iot-dp-usbc-idp-overlay.dtbo \
+	trinketp-iot-dp-usbc-idp-overlay.dtbo
 
 trinket-dtb-$(CONFIG_ARCH_TRINKET) += \
         $(call add-overlays, $(TRINKET_BOARDS) ,$(TRINKET_BASE_DTB))
@@ -293,6 +343,7 @@ sdmsteppeauto-overlays-dtb-$(CONFIG_ARCH_SA6155) += $(SA6155_BOARDS) $(SA6155P_B
 dtb-y += $(sdmsteppeauto-dtb-y)
 
 SDM670_BASE_DTB += qcs605.dtb
+SDM670_LC_BASE_DTB += qcs605-lc.dtb
 
 SDM670_BOARDS += \
 		 qcs605-mtp-overlay.dtbo \
@@ -300,9 +351,16 @@ SDM670_BOARDS += \
 		 qcs605-360camera-overlay.dtbo \
 		 qcs605-external-codec-mtp-overlay.dtbo
 
+SDM670_LC_BOARDS += \
+		qcs605-lc-mtp-overlay.dtbo \
+		qcs605-lc-ipcamera-overlay.dtbo \
+		qcs605-lc-cdp-overlay.dtbo
+
+
 qcs605-dtb-$(CONFIG_ARCH_SDM670) += \
-	$(call add-overlays, $(SDM670_BOARDS) ,$(SDM670_BASE_DTB))
-qcs605-overlays-dtb-$(CONFIG_ARCH_SDM670) += $(SDM670_BOARDS) $(SDM670_BASE_DTB)
+	$(call add-overlays, $(SDM670_BOARDS) ,$(SDM670_BASE_DTB)) \
+	$(call add-overlays, $(SDM670_LC_BOARDS) ,$(SDM670_LC_BASE_DTB))
+qcs605-overlays-dtb-$(CONFIG_ARCH_SDM670) += $(SDM670_BOARDS) $(SDM670_BASE_DTB) $(SDM670_LC_BOARDS) $(SDM670_LC_BASE_DTB)
 dtb-y += $(qcs605-dtb-y)
 
 LEMANS_BASE_DTB		+= lemans.dtb
@@ -481,6 +539,10 @@ kalama_tuivm-dtb-$(CONFIG_ARCH_QTI_VM) += kalama-vm-rumi.dtb \
                  kalamap-oemvm-hdk.dtb \
                  kalamap-oemvm-hhg.dtb
 dtb-y += $(kalama_tuivm-dtb-y)
+
+kalamale_roboticsvm-dtb-$(CONFIG_ARCH_QTI_VM) += kalamale_roboticsvm1-dvt.dtb \
+	kalamale_roboticsvm2-dvt.dtb
+dtb-y += $(kalamale_roboticsvm-dtb-y)
 endif
 endif
 

@@ -797,7 +797,7 @@
 			config {
 				pins = "gpio44";
 				drive-strength = <2>;
-				bias-pull-up;
+				bias-disable;
 				qcom,i2c_pull;
 			};
 		};
@@ -811,7 +811,7 @@
 			config {
 				pins = "gpio45";
 				drive-strength = <2>;
-				bias-pull-up;
+				bias-disable;
 				qcom,i2c_pull;
 			};
 		};
@@ -825,7 +825,7 @@
 			config {
 				pins = "gpio44", "gpio45";
 				drive-strength = <2>;
-				//bias-disable - Has strong PU
+				bias-disable;
 			};
 		};
 	};
@@ -1584,6 +1584,47 @@
 		};
 	};
 
+	qupv3_se9_2uart_pins: qupv3_se9_2uart_pins {
+		qupv3_se9_2uart_tx_active: qupv3_se9_2uart_tx_active {
+			mux {
+				pins = "gpio62";
+				function = "qup2_se1_l2";
+			};
+
+			config {
+				pins = "gpio62";
+				drive-strength = <2>;
+				bias-disable;
+			};
+		};
+
+		qupv3_se9_2uart_rx_active: qupv3_se9_2uart_rx_active {
+			mux {
+				pins = "gpio63";
+				function = "qup2_se1_l3";
+			};
+
+			config {
+				pins = "gpio63";
+				drive-strength = <2>;
+				bias-disable;
+			};
+		};
+
+		qupv3_se9_2uart_sleep: qupv3_se9_2uart_sleep {
+			mux {
+				pins = "gpio62", "gpio63";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio62", "gpio63";
+				drive-strength = <2>;
+				bias-pull-down;
+			};
+	       };
+	};
+
 	qupv3_se10_i2c_pins: qupv3_se10_i2c_pins {
 		qupv3_se10_i2c_sda_active: qupv3_se10_i2c_sda_active {
 			mux {
@@ -1804,6 +1845,47 @@
 					"gpio70", "gpio71";
 				drive-strength = <6>;
 				bias-disable;
+			};
+		};
+	};
+
+	qupv3_se11_2uart_pins: qupv3_se11_2uart_pins {
+		qupv3_se11_2uart_tx_active: qupv3_se11_2uart_tx_active {
+			mux {
+				pins = "gpio70";
+				function = "qup2_se3_l2";
+			};
+
+			config {
+				pins = "gpio70";
+				drive-strength = <2>;
+				bias-disable;
+			};
+		};
+
+		qupv3_se11_2uart_rx_active: qupv3_se11_2uart_rx_active {
+			mux {
+				pins = "gpio71";
+				function = "qup2_se3_l3";
+			};
+
+			config {
+				pins = "gpio71";
+				drive-strength = <2>;
+				bias-disable;
+			};
+		};
+
+		qupv3_se11_2uart_sleep: qupv3_se11_2uart_sleep {
+			mux {
+				pins = "gpio70", "gpio71";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio70", "gpio71";
+				drive-strength = <2>;
+				bias-pull-down;
 			};
 		};
 	};
@@ -3678,6 +3760,21 @@
 			pins = "gpio14", "gpio19", "gpio86";
 			bias-no-pull;
 			drive-strength = <2>;
+		};
+	};
+
+	qps615_intn_wol {
+		qca_intn_wol_sig: qca_intn_wol_sig {
+			mux {
+				pins = "gpio177";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio177";
+				input-enable;
+				bias-disable;
+			};
 		};
 	};
 };

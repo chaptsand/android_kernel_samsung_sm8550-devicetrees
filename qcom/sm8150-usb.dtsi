@@ -134,7 +134,6 @@
 				"ss_phy_irq","dm_hs_phy_irq";
 		qcom,use-pdc-interrupts;
 		qcom,default-mode-host;
-		qcom,force-gen1;
 		qcom,host-poweroff-in-pm-suspend;
 
 		USB3_GDSC-supply = <&usb30_sec_gdsc>;

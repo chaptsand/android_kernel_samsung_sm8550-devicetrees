@@ -19,9 +19,9 @@
 	qcom,vdd-io-voltage-level = <1800000 1800000>;
 	qcom,vdd-io-current-level = <0 325000>;
 
-	pinctrl-names = "active", "sleep";
-	pinctrl-0 = <&sdc1_clk_on  &sdc1_cmd_on &sdc1_data_on &sdc1_rclk_on>;
-	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off &sdc1_rclk_off>;
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&sdc1_on>;
+	pinctrl-1 = <&sdc1_off>;
 
 	status = "ok";
 };
@@ -85,9 +85,9 @@
 	qcom,vdd-io-voltage-level = <1800000 2960000>;
 	qcom,vdd-io-current-level = <0 22000>;
 
-	pinctrl-names = "active", "sleep";
-	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
-	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&sdc2_on>;
+	pinctrl-1 = <&sdc2_off>;
 
 	cd-gpios = <&tlmm 116 0x1>;
 
@@ -110,50 +110,10 @@
 	extcon = <&extcon_usb1>;
 };
 
-&cdc_pdm_gpios {
-	status = "disabled";
-};
-
-&cdc_comp_gpios {
-	status = "disabled";
-};
-
-&cdc_dmic_gpios {
-	status = "disabled";
-};
-
-&cdc_sdw_gpios {
-	status = "disabled";
-};
-
-&wsa_spkr_en1 {
-	status = "disabled";
-};
-
-&wsa_spkr_en2 {
-	status = "disabled";
-};
-
 &qupv3_se8_spi {
 	status = "okay";
 };
 
-&wcd9xxx_intc {
-	status = "okay";
-};
-
-&wdsp_mgr {
-	status = "okay";
-};
-
-&wdsp_glink {
-	status = "okay";
-};
-
 &slim_aud {
-	status = "okay";
-};
-
-&dai_slim {
 	status = "okay";
 };

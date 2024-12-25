@@ -655,7 +655,7 @@
 
 				config {
 					pins = "gpio20", "gpio21",
-						"gio22";
+						"gpio22";
 					drive-strength = <6>;
 					bias-disable;
 				};

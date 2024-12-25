@@ -680,7 +680,7 @@
 			<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_QUP_1>,
 			<&aggre2_noc MASTER_QUP_1 &mc_virt  SLAVE_EBI1>;
 			pinctrl-names = "default", "sleep";
-			pinctrl-0 = <&qupv3_se13_i2c_active>;
+			pinctrl-0 = <&qupv3_se13_i2c_sda_active>, <&qupv3_se13_i2c_scl_active>;
 			pinctrl-1 = <&qupv3_se13_i2c_sleep>;
 			status = "disabled";
 		};

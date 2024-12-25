@@ -479,8 +479,6 @@
 		reg-names = "freq-domain0";
 		clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
 		clock-names = "xo", "alternate";
-		interrupts = <GIC_SPI 30 IRQ_TYPE_LEVEL_HIGH>;
-		interrupt-names = "dcvsh0_int";
 		#freq-domain-cells = <1>;
 	};
 
@@ -506,6 +504,7 @@
 		parent-supply = <&VDD_CX_LEVEL>;
 		qcom,retain-regs;
 		qcom,support-hw-trigger;
+		qcom,clear-retain-regs;
 	};
 
 	gcc_usb20_gdsc: qcom,gdsc@a7004 {

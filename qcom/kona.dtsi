@@ -2883,6 +2883,39 @@
 		};
 	};
 
+	npu_pas: remoteproc-npu@9800000 {
+		compatible = "qcom,kona-npu-pas";
+		reg = <0x9800000 0x800000>;
+		status = "ok";
+
+		memory-region = <&pil_npu_mem>;
+
+		/* Outputs to npu */
+		qcom,smem-states = <&npu_smp2p_out 0>;
+		qcom,smem-state-names = "stop";
+
+		glink-edge {
+			qcom,remote-pid = <10>;
+			mboxes = <&msm_npu IPCC_CLIENT_NPU
+				  IPCC_MPROC_SIGNAL_GLINK_QMP>;
+			mbox-names = "npu_smem";
+			interrupt-parent = <&ipcc_mproc>;
+			interrupts = <IPCC_CLIENT_NPU
+				      IPCC_MPROC_SIGNAL_GLINK_QMP
+				      IRQ_TYPE_EDGE_RISING>;
+
+			label = "npu";
+
+			qcom,npu_qrtr {
+				qcom,net-id = <1>;
+				qcom,glink-channels = "IPCRTR";
+				qcom,intents = <0x800  5
+						0x2000 3
+						0x4400 2>;
+			};
+		};
+	};
+
 	qcom,smp2p_sleepstate {
 		compatible = "qcom,smp2p-sleepstate";
 		qcom,smem-states = <&sleepstate_smp2p_out 0>;
@@ -4145,3 +4178,4 @@
 #include "msm-rdbg.dtsi"
 #include "kona-thermal.dtsi"
 #include "kona-coresight.dtsi"
+#include "kona-npu.dtsi"
