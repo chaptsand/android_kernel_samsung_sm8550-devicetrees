@@ -10,12 +10,6 @@
 			memory-region = <&adsp_mem>;
 		};
 
-		qcom,sp_hlos {
-			qcom,dma-heap-name = "qcom,sp-hlos";
-			qcom,dma-heap-type = <HEAP_TYPE_CMA>;
-			memory-region = <&sp_mem>;
-		};
-
 		qcom,user_contig {
 			qcom,dma-heap-name = "qcom,user-contig";
 			qcom,dma-heap-type = <HEAP_TYPE_CMA>;
@@ -24,8 +18,9 @@
 
 		qcom,qseecom {
 			qcom,dma-heap-name = "qcom,qseecom";
-			qcom,dma-heap-type = <HEAP_TYPE_CARVEOUT>;
+			qcom,dma-heap-type = <HEAP_TYPE_CMA>;
 			memory-region = <&qseecom_mem>;
+			qcom,uncached-heap;
 		};
 
 		qcom,qseecom_ta {

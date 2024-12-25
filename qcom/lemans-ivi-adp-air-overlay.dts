@@ -7,5 +7,5 @@
 	model = "Qualcomm Technologies, Inc. Lemans IVI ADP AIR";
 	compatible = "qcom,lemans", "qcom,adp-air", "qcom,lemans-ivi", "qcom,lemans-ivi-adp-air";
 	qcom,msm-id = <532 0x10000>;
-	qcom,board-id = <0x1010019 0>;
+	qcom,board-id = <0x1010025 0>;
 };

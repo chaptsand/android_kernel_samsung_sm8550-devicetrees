@@ -11,3 +11,7 @@
 		status = "disabled";
 	};
 };
+
+&ipa_hw {
+	status = "disabled";
+};

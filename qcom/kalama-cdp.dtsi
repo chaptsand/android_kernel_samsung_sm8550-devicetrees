@@ -48,10 +48,6 @@
 	};
 };
 
-&pm8550b_haptics {
-	status = "okay";
-};
-
 &ufsphy_mem {
 	compatible = "qcom,ufs-phy-qmp-v4-kalama";
 
@@ -88,6 +84,9 @@
 
 	qcom,vccq-parent-supply = <&pm_v6g_s4>;
 	qcom,vccq-parent-max-microamp = <210000>;
+
+	qcom,vccq-shutdown-supply = <&pm_v6g_l1>;
+	qcom,vccq-shutdown-max-microamp = <1200000>;
 
 	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
 	resets = <&gcc GCC_UFS_PHY_BCR>;
@@ -202,11 +201,6 @@
 		 0x3 0x54
 		/* Tx pre-emphasis tuning */
 		 0x5 0x57>;
-};
-
-&eusb2_phy0 {
-	dummy-supply = <&pm8550b_eusb2_repeater>;
-	usb-repeater = <&pm8550b_eusb2_repeater>;
 };
 
 &usb0 {

@@ -42,6 +42,7 @@ on the Qualcomm Technologies inc ADSP Hexagon core.
 		    "qcom,khaje-modem-pas"
 		    "qcom,sdmshrike-adsp-pas"
 		    "qcom,sdmshrike-cdsp-pas"
+		    "qcom,sdmshrike-mpss-pas"
 		    "qcom,scuba_auto-modem-pas"
 		    "qcom,scuba_auto-lpass-pas"
 		    "qcom,monaco-adsp-pas"
@@ -52,6 +53,24 @@ on the Qualcomm Technologies inc ADSP Hexagon core.
 		    "qcom,lemans-cdsp1-pas"
 		    "qcom,lemans-gpdsp0-pas"
 		    "qcom,lemans-gpdsp1-pas"
+		    "qcom,kona-adsp-pas"
+		    "qcom,kona-cdsp-pas"
+		    "qcom,kona-slpi-pas"
+			"qcom,kona-npu-pas"
+		    "qcom,crow-wpss-pas"
+		    "qcom,crow-adsp-pas"
+		    "qcom,crow-cdsp-pas"
+		    "qcom,crow-modem-pas"
+		    "qcom,trinket-modem-pas"
+		    "qcom,trinket-adsp-pas"
+		    "qcom,trinket-cdsp-pas"
+		    "qcom,qcs605-adsp-pas"
+		    "qcom,qcs605-cdsp-pas"
+		    "qcom,bengal-adsp-pas"
+		    "qcom,bengal-cdsp-pas"
+		    "qcom,bengal-modem-pas"
+		    "qcom,scuba-adsp-pas"
+		    "qcom,scuba-modem-pas"
 
 - interrupts-extended:
 	Usage: required
@@ -166,6 +185,10 @@ on the Qualcomm Technologies inc ADSP Hexagon core.
 	Value type: <stringlist>
 	Definition: must be "stop"
 
+- legacy-wlan:
+	Usage: optional
+	Value type: <none>
+	Definition: indicates the presence of legacy WLAN
 
 = SUBNODES
 The adsp node may have an subnode named either "smd-edge" or "glink-edge" that

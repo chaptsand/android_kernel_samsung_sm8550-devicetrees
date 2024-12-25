@@ -8,17 +8,41 @@
 	aliases {
 		hsuart0 = &qupv3_se17_4uart;
 		serial0 = &qupv3_se12_2uart;
+		i2c2 = &qupv3_se2_i2c;
+		mmc1 = &sdhc_2; /* SDC2 SD card slot */
 	};
 
 	cpus {
 		#address-cells = <2>;
 		#size-cells = <0>;
 
+		cluster_0_opp_table: opp-table0 {
+			compatible = "operating-points-v2";
+			opp-shared;
+
+			opp-2131200000 {
+				opp-hz = /bits/ 64 <2131200000>;
+				opp-microvolt = <948000>;
+			};
+		};
+
+		cluster_1_opp_table: opp-table1 {
+			compatible = "operating-points-v2";
+			opp-shared;
+
+			opp-1785600000 {
+				opp-hz = /bits/ 64 <1785600000>;
+				opp-microvolt = <892000>;
+			};
+		};
+
 		CPU0: cpu@0 {
 			device_type = "cpu";
 			compatible = "arm,armv8";
 			reg = <0x0 0x0>;
 			capacity-dmips-mhz = <1024>;
+			dynamic-power-coefficient = <374>;
+			operating-points-v2 = <&cluster_0_opp_table>;
 		};
 
 		CPU1: cpu@1 {
@@ -26,6 +50,8 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x1>;
 			capacity-dmips-mhz = <1024>;
+			dynamic-power-coefficient = <374>;
+			operating-points-v2 = <&cluster_0_opp_table>;
 		};
 
 		CPU2: cpu@2 {
@@ -33,6 +59,8 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x2>;
 			capacity-dmips-mhz = <1024>;
+			dynamic-power-coefficient = <374>;
+			operating-points-v2 = <&cluster_0_opp_table>;
 		};
 
 		CPU3: cpu@3 {
@@ -40,34 +68,44 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x3>;
 			capacity-dmips-mhz = <1024>;
+			dynamic-power-coefficient = <374>;
+			operating-points-v2 = <&cluster_0_opp_table>;
 		};
 
 		CPU4: cpu@4 {
 			device_type = "cpu";
 			compatible = "arm,armv8";
 			reg = <0x0 0x4>;
-			capacity-dmips-mhz = <414>;
+			capacity-dmips-mhz = <419>;
+			dynamic-power-coefficient = <100>;
+			operating-points-v2 = <&cluster_1_opp_table>;
 		};
 
 		CPU5: cpu@5 {
 			device_type = "cpu";
 			compatible = "arm,armv8";
 			reg = <0x0 0x5>;
-			capacity-dmips-mhz = <414>;
+			capacity-dmips-mhz = <419>;
+			dynamic-power-coefficient = <100>;
+			operating-points-v2 = <&cluster_1_opp_table>;
 		};
 
 		CPU6: cpu@6 {
 			device_type = "cpu";
 			compatible = "arm,armv8";
 			reg = <0x0 0x6>;
-			capacity-dmips-mhz = <414>;
+			capacity-dmips-mhz = <419>;
+			dynamic-power-coefficient = <100>;
+			operating-points-v2 = <&cluster_1_opp_table>;
 		};
 
 		CPU7: cpu@7 {
 			device_type = "cpu";
 			compatible = "arm,armv8";
 			reg = <0x0 0x7>;
-			capacity-dmips-mhz = <414>;
+			capacity-dmips-mhz = <419>;
+			dynamic-power-coefficient = <100>;
+			operating-points-v2 = <&cluster_1_opp_table>;
 		};
 
 		cpu-map {
@@ -277,6 +315,16 @@
 		memory-region = <&system_cma>;
 	};
 
+	ptp_virtual {
+		compatible = "qcom,ptp_virtual";
+		reg = <0xeb600000 0x1000>,
+			<0x2700c 0x1000>,
+			<0x17c23000 0x1000>;
+		reg-names = "ptp_carveout_mem",
+				"ptp_reg",
+				"qtimer_reg";
+	};
+
 	qcom_rng: qrng@793000 {
 		compatible = "qcom,msm-rng";
 		reg = <0x793000 0x1000>;
@@ -293,6 +341,48 @@
 		interrupt-parent = <&intc>;
 		interrupt-controller;
 	};
+
+	sdhc_2: sdhci@8804000 {
+		compatible = "qcom,sdhci-msm-v5";
+		reg = <0x8804000 0x1000>;
+		reg-names = "hc";
+
+		interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
+		interrupt-names = "hc_irq", "pwr_irq";
+
+		clocks = <&gcc GCC_SDCC2_AHB_CLK>,
+			<&gcc GCC_SDCC2_APPS_CLK>;
+		clock-names = "iface", "core";
+
+		bus-width = <4>;
+		no-sdio;
+		no-mmc;
+		qcom,restore-after-cx-collapse;
+
+		/* DLL HSR settings. Refer go/hsr - <Target> DLL settings */
+		qcom,dll-hsr-list = <0x0007642c 0x0 0x10 0x2C010800 0x80040868>;
+
+		vdd-supply = <&L17A>;
+		qcom,vdd-voltage-level = <2950000 2960000>;
+		qcom,vdd-current-level = <200 800000>;
+
+		vdd-io-supply = <&L13C>;
+		qcom,vdd-io-voltage-level = <1808000 2960000>;
+		qcom,vdd-io-current-level = <200 22000>;
+
+		pinctrl-names = "default", "sleep";
+		pinctrl-0 = <&sdc2_on>;
+		pinctrl-1 = <&sdc2_off>;
+
+		cd-gpios = <&pm8150_gpios 4 GPIO_ACTIVE_LOW>;
+
+		status = "disabled";
+	};
+};
+
+&qseecom_dma_heap {
+	qcom,uncached-heap;
 };
 
 #include "sm8150-pinctrl.dtsi"
@@ -305,98 +395,106 @@
 };
 
 &regulator {
-	virt_regulator {
-		compatible = "virtio,device31";
+	usb30_prim_gdsc: usb30_prim_gdsc {
+		regulator-name = "usb30_prim_gdsc";
+	};
 
-		usb30_prim_gdsc: usb30_prim_gdsc {
-			regulator-name = "usb30_prim_gdsc";
-		};
+	usb30_sec_gdsc: usb30_sec_gdsc {
+		regulator-name = "usb30_sec_gdsc";
+	};
 
-		usb30_sec_gdsc: usb30_sec_gdsc {
-			regulator-name = "usb30_sec_gdsc";
-		};
+	pcie_0_gdsc: pcie_0_gdsc {
+		regulator-name = "pcie_0_gdsc";
+	};
 
-		pcie_0_gdsc: pcie_0_gdsc {
-			regulator-name = "pcie_0_gdsc";
-		};
+	pcie_1_gdsc: pcie_1_gdsc {
+		regulator-name = "pcie_1_gdsc";
+	};
 
-		pcie_1_gdsc: pcie_1_gdsc {
-			regulator-name = "pcie_1_gdsc";
-		};
+	L2A: pm8150_1_l2: regulator-pm8150-1-l2 {
+		regulator-name = "ldoa2";
+		regulator-min-microvolt = <3072000>;
+		regulator-max-microvolt = <3072000>;
+	};
 
-		L2A: pm8150_1_l2: regulator-pm8150-1-l2 {
-			regulator-name = "ldoa2";
-			regulator-min-microvolt = <3072000>;
-			regulator-max-microvolt = <3072000>;
-		};
+	L5A: pm8150_1_l5: regulator-pm8150-1-l5 {
+		regulator-name = "ldoa5";
+		regulator-min-microvolt = <880000>;
+		regulator-max-microvolt = <880000>;
+	};
 
-		L5A: pm8150_1_l5: regulator-pm8150-1-l5 {
-			regulator-name = "ldoa5";
-			regulator-min-microvolt = <880000>;
-			regulator-max-microvolt = <880000>;
-		};
+	L12A: pm8150_1_l12: regulator-pm8150-1-l12 {
+		regulator-name = "ldoa12";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+	};
 
-		L12A: pm8150_1_l12: regulator-pm8150-1-l12 {
-			regulator-name = "ldoa12";
-			regulator-min-microvolt = <1800000>;
-			regulator-max-microvolt = <1800000>;
-		};
+	L17A: pm8150_1_l17: regulator-pm8150-1-l17 {
+		regulator-name = "ldoa17";
+		regulator-min-microvolt = <2704000>;
+		regulator-max-microvolt = <2960000>;
+	};
 
-		L17A: pm8150_1_l17: regulator-pm8150-1-l17 {
-			regulator-name = "ldoa17";
-			regulator-min-microvolt = <2704000>;
-			regulator-max-microvolt = <2960000>;
-		};
+	L8C: pm8150_2_l8: regulator-pm8150-2-l8 {
+		regulator-name = "ldoc8";
+		regulator-min-microvolt = <1200000>;
+		regulator-max-microvolt = <1200000>;
+		regulator-allow-set-load;
+	};
 
-		L8C: pm8150_2_l8: regulator-pm8150-2-l8 {
-			regulator-name = "ldoc8";
-			regulator-min-microvolt = <1200000>;
-			regulator-max-microvolt = <1200000>;
-			regulator-allow-set-load;
-		};
+	L13C: pm8150_2_l13: regulator-pm8150-2-l13 {
+		regulator-name = "ldoc13";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <2960000>;
+	};
 
-		L13C: pm8150_2_l13: regulator-pm8150-2-l13 {
-			regulator-name = "ldoc13";
-			regulator-min-microvolt = <1800000>;
-			regulator-max-microvolt = <2960000>;
-		};
+	L15C: pm8150_2_l15: regulator-pm8150-2-l15 {
+		regulator-name = "ldoc15";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1904000>;
+	};
 
-		L15C: pm8150_2_l15: regulator-pm8150-2-l15 {
-			regulator-name = "ldoc15";
-			regulator-min-microvolt = <1800000>;
-			regulator-max-microvolt = <1904000>;
-		};
+	L18C: pm8150_2_l18: regulator-pm8150-2-l18 {
+		regulator-name = "ldoc18";
+		regulator-min-microvolt = <880000>;
+		regulator-max-microvolt = <880000>;
+		regulator-allow-set-load;
+	};
 
-		L18C: pm8150_2_l18: regulator-pm8150-2-l18 {
-			regulator-name = "ldoc18";
-			regulator-min-microvolt = <880000>;
-			regulator-max-microvolt = <880000>;
-			regulator-allow-set-load;
-		};
+	S6A: pm8150_1_s6: regulator-pm8150-1-s6 {
+		regulator-name = "smpa6";
+		regulator-min-microvolt = <600000>;
+		regulator-max-microvolt = <1352000>;
+	};
 
-		S6A: pm8150_1_s6: regulator-pm8150-1-s6 {
-			regulator-name = "smpa6";
-			regulator-min-microvolt = <600000>;
-			regulator-max-microvolt = <1352000>;
-		};
+	S4C: pm8150_2_s4: regulator-pm8150-2-s4 {
+		regulator-name = "smpc4";
+		regulator-min-microvolt = <800000>;
+		regulator-max-microvolt = <1400000>;
+	};
 
-		S4C: pm8150_2_s4: regulator-pm8150-2-s4 {
-			regulator-name = "smpc4";
-			regulator-min-microvolt = <800000>;
-			regulator-max-microvolt = <1400000>;
-		};
-
-		S5C: pm8150_2_s5: regulator-pm8150-2-s5 {
-			regulator-name = "smpc5";
-			regulator-min-microvolt = <1824000>;
-			regulator-max-microvolt = <2040000>;
-		};
+	S5C: pm8150_2_s5: regulator-pm8150-2-s5 {
+		regulator-name = "smpc5";
+		regulator-min-microvolt = <1824000>;
+		regulator-max-microvolt = <2040000>;
 	};
 };
 
 &hab {
 	/delete-node/ mmidgrp1400;
 	/delete-node/ mmidgrp1500;
+};
+
+&qupv3_0 {
+	qcom,iommu-dma = "bypass";
+};
+
+&qupv3_1 {
+	qcom,iommu-dma = "bypass";
+};
+
+&qupv3_2 {
+	qcom,iommu-dma = "bypass";
 };
 
 &pcie0_msi {
@@ -474,4 +572,9 @@
 		qcom,glb-db-receivers = <&hgsl_tcsr_receiver0
 					&hgsl_tcsr_receiver1>;
 	};
+};
+
+&qseecom_mem {
+	/delete-property/ reusable;
+	no-map;
 };

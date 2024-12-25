@@ -21,6 +21,7 @@ Optional properties:
 - qcom,wakeup-byte: Byte to be injected in the tty layer during wakeup isr.
 - qcom,change-sampling-rate: This is a boolean parameter and use this to decide
   the samping rate at which sequencer engine runs.
+- qcom,le-vm: Specifies that this serial port is operating in a secondary VM.
 
 Example:
 qupv3_uart11: qcom,qup_uart@0xa88000 {

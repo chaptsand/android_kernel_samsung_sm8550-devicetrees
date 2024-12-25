@@ -240,3 +240,14 @@
 		};
 	};
 };
+
+&qupv3_se1_i2c {
+	fsa4480: fsa4480@42 {
+		compatible = "qcom,fsa4480-i2c";
+		reg = <0x42>;
+		qcom,use-power-supply = <1>;
+		#io-channel-cells = <1>;
+		io-channels = <&pm7250b_charger PSY_IIO_TYPEC_ACCESSORY_MODE>;
+		io-channel-names = "typec_mode";
+	};
+};

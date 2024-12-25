@@ -2567,6 +2567,15 @@
 		interrupt-names = "byte-cntr-irq";
 
 		arm,scatter-gather;
+
+		qcom,qdss-pcie-support;
+		qcom,qdss-ipa-support;
+		ipa-peer-evt-reg-pa = <0x10077818>;
+		pcie-desc-buf-size = <0x2000>;
+		pcie-data-buf-size = <0x4000>;
+
+		sw_pcie_buf_size = <0x2000000>;
+
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
 

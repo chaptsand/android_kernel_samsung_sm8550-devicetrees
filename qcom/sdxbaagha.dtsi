@@ -4,8 +4,10 @@
 #include <dt-bindings/soc/qcom,ipcc.h>
 #include <dt-bindings/interconnect/qcom,icc.h>
 #include <dt-bindings/interconnect/qcom,sdxbaagha.h>
+#include <dt-bindings/regulator/qcom,rpmh-regulator-levels.h>
 #include <dt-bindings/soc/qcom,rpmh-rsc.h>
 #include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/spmi/spmi.h>
 
 / {
 	#address-cells = <1>;
@@ -18,6 +20,8 @@
 
 	aliases {
 		serial0 = &qupv3_se3_2uart;
+		serial1 = &qupv3_se0_2uart; /* MDM SAP UART Instance */
+		hsuart0 = &qupv3_se1_4uart; /* HST BT HCI UART Instance */
 	};
 
 	chosen {
@@ -25,6 +29,7 @@
 	};
 
 	memory { device_type = "memory"; reg = <0 0>; };
+	firmware: firmware { };
 
 	reserved_memory: reserved-memory {
 		#address-cells = <1>;
@@ -132,6 +137,21 @@
 			linux,cma-default;
 		};
 
+		qseecom_mem: qseecom_region {
+			compatible = "shared-dma-pool";
+			alloc-ranges = <0x00000000 0xffffffff>;
+			reusable;
+			alignment = <0x400000>;
+			size = <0x400000>;
+		};
+
+		qseecom_ta_mem: qseecom_ta_region {
+			compatible = "shared-dma-pool";
+			alloc-ranges = <0x00000000 0xffffffff>;
+			reusable;
+			alignment = <0x400000>;
+			size = <0x400000>;
+		};
 	};
 
 	cpus {
@@ -149,7 +169,6 @@
 	soc: soc { };
 };
 
-#include "sdxbaagha-stub-regulator.dtsi"
 
 &soc {
 	#address-cells = <1>;
@@ -247,21 +266,27 @@
 		label = "apps_rsc";
 		compatible = "qcom,rpmh-rsc";
 		reg = <0x17040000 0x10000>,
-		      <0x17050000 0x10000>;
-		reg-names = "drv-0", "drv-1";
-		qcom,drv-count = <2>;
+		      <0x17050000 0x10000>,
+		      <0x17060000 0x10000>;
+		reg-names = "drv-0", "drv-1", "drv-2";
+		qcom,drv-count = <3>;
 		interrupts = <GIC_SPI 16 IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>, /* dummy */
 			     <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
 
-		apps_rsc_drv1: drv@1 {
-			qcom,drv-id = <1>;
+		apps_rsc_drv2: drv@2 {
+			qcom,drv-id = <2>;
 			qcom,tcs-offset = <0xd00>;
 			channel@0 {
 				qcom,tcs-config = <ACTIVE_TCS    2>,
-						  <SLEEP_TCS     1>,
-						  <WAKE_TCS      1>,
+						  <SLEEP_TCS     3>,
+						  <WAKE_TCS      3>,
 						  <CONTROL_TCS   0>,
 						  <FAST_PATH_TCS 0>;
+			};
+
+			apps_bcm_voter: bcm_voter {
+				compatible = "qcom,bcm-voter";
 			};
 
 			rpmhcc: clock-controller {
@@ -411,12 +436,15 @@
 		reg = <0x80000 0x1f4200>;
 		reg-name = "cc_base";
 		vdd_cx-supply = <&VDD_CX_LEVEL>;
+		vdd_cx_ao-supply = <&VDD_CX_LEVEL_AO>;
 		vdd_mxa-supply = <&VDD_MXA_LEVEL>;
 		vdd_mxc-supply = <&VDD_MXC_LEVEL>;
 		clocks = <&rpmhcc RPMH_CXO_CLK>,
+			 <&rpmhcc RPMH_CXO_CLK_A>,
 			 <&pcie_pipe_clk>,
 			 <&sleep_clk>;
 		clock-names = "bi_tcxo",
+			      "bi_tcxo_ao",
 			      "pcie_pipe_clk",
 			      "sleep_clk";
 		#clock-cells = <1>;
@@ -451,8 +479,6 @@
 		reg-names = "freq-domain0";
 		clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
 		clock-names = "xo", "alternate";
-		interrupts = <GIC_SPI 30 IRQ_TYPE_LEVEL_HIGH>;
-		interrupt-names = "dcvsh0_int";
 		#freq-domain-cells = <1>;
 	};
 
@@ -478,6 +504,7 @@
 		parent-supply = <&VDD_CX_LEVEL>;
 		qcom,retain-regs;
 		qcom,support-hw-trigger;
+		qcom,clear-retain-regs;
 	};
 
 	gcc_usb20_gdsc: qcom,gdsc@a7004 {
@@ -497,51 +524,69 @@
 		#mbox-cells = <2>;
 	};
 
-	mc_virt: interconnect@0 {
+	clk_virt: interconnect@0 {
+		compatible = "qcom,sdxbaagha-clk_virt";
+		#interconnect-cells = <1>;
+		qcom,bcm-voter-names = "hlos";
+		qcom,bcm-voters = <&apps_bcm_voter>;
+	};
+
+	mc_virt: interconnect@1 {
 		compatible = "qcom,sdxbaagha-mc_virt";
 		#interconnect-cells = <1>;
-		qcom,stub;
-		qcom,skip-qos;
+		qcom,bcm-voter-names = "hlos";
+		qcom,bcm-voters = <&apps_bcm_voter>;
 	};
 
 	aggre_noc: interconnect@1640000 {
 		reg = <0x1640000 0x33400>;
 		compatible = "qcom,sdxbaagha-aggre_noc";
 		#interconnect-cells = <1>;
-		qcom,stub;
-		qcom,skip-qos;
+		qcom,bcm-voter-names = "hlos";
+		qcom,bcm-voters = <&apps_bcm_voter>;
+		clocks = <&gcc GCC_SYS_NOC_USB_SF_AXI_CLK>,
+			<&rpmhcc RPMH_IPA_CLK>;
 	};
 
 	cnoc_main: interconnect@1580000 {
 		reg = <0x01580000 0x19200>;
 		compatible = "qcom,sdxbaagha-cnoc_main";
 		#interconnect-cells = <1>;
-		qcom,stub;
-		qcom,skip-qos;
+		qcom,bcm-voter-names = "hlos";
+		qcom,bcm-voters = <&apps_bcm_voter>;
 	};
 
-	dc_noc_dch: interconnect@190E0000 {
+	dc_noc: interconnect@190E0000 {
 		reg = <0x190E0000 0x5080>;
-		compatible = "qcom,sdxbaagha-dc_noc_dch";
+		compatible = "qcom,sdxbaagha-dc_noc";
 		#interconnect-cells = <1>;
-		qcom,stub;
-		qcom,skip-qos;
+		qcom,bcm-voter-names = "hlos";
+		qcom,bcm-voters = <&apps_bcm_voter>;
 	};
 
 	mem_noc: interconnect@19100000 {
 		reg = <0x19100000 0x2D080>;
 		compatible = "qcom,sdxbaagha-mem_noc";
 		#interconnect-cells = <1>;
-		qcom,stub;
-		qcom,skip-qos;
+		qcom,bcm-voter-names = "hlos";
+		qcom,bcm-voters = <&apps_bcm_voter>;
 	};
 
-	snoc: interconnect@15C0000 {
-		reg = <0x15C0000 0x14080>;
-		compatible = "qcom,sdxbaagha-snoc";
+	pcie_anoc: interconnect@16C0000 {
+		reg = <0x16C0000 0x16400>;
+		compatible = "qcom,sdxbaagha-pcie_anoc";
 		#interconnect-cells = <1>;
-		qcom,stub;
-		qcom,skip-qos;
+		qcom,bcm-voter-names = "hlos";
+		qcom,bcm-voters = <&apps_bcm_voter>;
+	};
+
+	system_noc: interconnect@15C0000 {
+		reg = <0x15C0000 0x14080>;
+		compatible = "qcom,sdxbaagha-system_noc";
+		#interconnect-cells = <1>;
+		qcom,bcm-voter-names = "hlos";
+		qcom,bcm-voters = <&apps_bcm_voter>;
+		clocks = <&rpmhcc RPMH_IPA_CLK>;
 	};
 
 	qcom,sps {
@@ -613,7 +658,7 @@
 		reset-names = "pcie_core_reset", "pcie_phy_reset";
 
 		interconnect-names = "icc_path";
-		interconnects = <&aggre_noc MASTER_PCIE_0 &mc_virt SLAVE_EBI1>;
+		interconnects = <&pcie_anoc MASTER_PCIE_0 &mc_virt SLAVE_EBI1>;
 
 		qcom,pcie-vendor-id = /bits/ 16 <0x17cb>;
 		qcom,pcie-device-id = /bits/ 16 <0x011a>;
@@ -622,9 +667,13 @@
 		qcom,pcie-active-config;
 		qcom,pcie-aggregated-irq;
 		qcom,pcie-mhi-a7-irq;
-		qcom,phy-status-reg2 = <0x214>;
+		qcom,phy-status-reg = <0x214>;
 		qcom,mhi-soc-reset-offset = <0xb001b8>;
+		qcom,pcie-cesta-clkreq-offset = <0x30b8>;
 		qcom,aoss-rst-clr;
+		qcom,tcsr-reset-separation-offset = <0x3f8>;
+		qcom,pcie-disconnect-req-reg-b = <6>;
+		qcom,ep-pcie-num-ipc-pages-dev-fac = <2>;
 		qcom,aux-clk = <0x13>;
 		qcom,phy-init = <0x0240 0x01 0x0
 				0x0094 0x00 0x0
@@ -712,12 +761,74 @@
 		qcom,mhi-ifc-id = <0x011a17cb>;
 		qcom,mhi-interrupt;
 		qcom,no-m0-timeout;
+		dummy-supply = <&pcie_ep>;
+		qcom,mhi-num-ipc-pages-dev-fac = <2>;
+
 		status = "disabled";
 	};
 
 	mhi_net_device: qcom,mhi_net_dev {
 		compatible = "qcom,msm-mhi-dev-net";
 		status = "disabled";
+	};
+
+	qcom_tzlog: tz-log@14693720 {
+		compatible = "qcom,tz-log";
+		reg = <0x14693720 0x3000>;
+	};
+
+	spmi_bus: qcom,spmi@c42d000 {
+		compatible = "qcom,spmi-pmic-arb";
+		reg = <0xc42d000 0x4000>,
+		      <0xc400000 0x3000>,
+		      <0xc500000 0x400000>,
+		      <0xc440000 0x80000>,
+		      <0xc4c0000 0x10000>;
+		reg-names = "cnfg", "core", "chnls", "obsrvr", "intr";
+		interrupts-extended = <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
+		interrupt-names = "periph_irq";
+		interrupt-controller;
+		#interrupt-cells = <4>;
+		#address-cells = <2>;
+		#size-cells = <0>;
+		cell-index = <0>;
+		qcom,channel = <0>;
+		qcom,ee = <0>;
+		qcom,bus-id = <0>;
+	};
+
+	spmi_debug_bus: qcom,spmi-debug@24b14000 {
+		compatible = "qcom,spmi-pmic-arb-debug";
+		reg = <0x24b14000 0x60>, <0x221c8784 0x4>;
+		reg-names = "core", "fuse";
+		clocks = <&aoss_qmp>;
+		clock-names = "core_clk";
+		qcom,fuse-enable-bit = <18>;
+		#address-cells = <2>;
+		#size-cells = <0>;
+		depends-on-supply = <&spmi_bus>;
+
+		qcom,pmx35-debug@0 {
+			compatible = "qcom,spmi-pmic";
+			reg = <0 SPMI_USID>;
+			#address-cells = <2>;
+			#size-cells = <0>;
+			qcom,can-sleep;
+		};
+	};
+
+	thermal_zones: thermal-zones {
+	};
+};
+
+&firmware {
+	qtee_shmbridge {
+		compatible = "qcom,tee-shared-memory-bridge";
+	};
+
+	qcom_smcinvoke {
+		compatible = "qcom,smcinvoke";
+		qcom,support-legacy_smc;
 	};
 };
 
@@ -727,6 +838,8 @@
 #include "sdxbaagha-pcie.dtsi"
 #include "sdxbaagha-qupv3.dtsi"
 #include "sdxbaagha-usb.dtsi"
+#include "sdxbaagha-pmic-overlay.dtsi"
+#include "sdxbaagha-regulators.dtsi"
 
 &qupv3_se3_2uart {
 	status = "ok";

@@ -8,9 +8,39 @@
 				cooling-device = <&CPU0 7 7>;
 			};
 
+			trip0_cpu1 {
+				trip = <&pm6125_trip0>;
+				cooling-device = <&CPU1 7 7>;
+			};
+
+			trip0_cpu2 {
+				trip = <&pm6125_trip0>;
+				cooling-device = <&CPU2 7 7>;
+			};
+
+			trip0_cpu3 {
+				trip = <&pm6125_trip0>;
+				cooling-device = <&CPU3 7 7>;
+			};
+
 			trip0_cpu4 {
 				trip = <&pm6125_trip0>;
 				cooling-device = <&CPU4 6 THERMAL_NO_LIMIT>;
+			};
+
+			trip0_cpu5 {
+				trip = <&pm6125_trip0>;
+				cooling-device = <&CPU5 6 THERMAL_NO_LIMIT>;
+			};
+
+			trip0_cpu6 {
+				trip = <&pm6125_trip0>;
+				cooling-device = <&CPU6 6 THERMAL_NO_LIMIT>;
+			};
+
+			trip0_cpu7 {
+				trip = <&pm6125_trip0>;
+				cooling-device = <&CPU7 6 THERMAL_NO_LIMIT>;
 			};
 
 			trip1_cpu1 {

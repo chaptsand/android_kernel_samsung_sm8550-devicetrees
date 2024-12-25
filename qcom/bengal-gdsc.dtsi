@@ -74,7 +74,7 @@
 		regulator-name = "mdss_core_gdsc";
 		proxy-supply = <&mdss_core_gdsc>;
 		qcom,proxy-consumer-enable;
-		status = "disabled";
+		status = "ok";
 	};
 
 	/* GDSCs in GPUCC */
